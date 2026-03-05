@@ -1,396 +1,380 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="UTF-8" />
+  <title>OKR Leadership Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background: #f4f5f7;
+      color: #333;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #1f2933;
+      color: #fff;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h1 {
+      font-size: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .person-list {
+      list-style: none;
+    }
+    .person-list li {
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .person-list li.active {
+      background: #2563eb;
+    }
+    .person-list li:hover {
+      background: #374151;
+    }
+
+    /* Main area */
+    .main {
+      flex: 1;
+      padding: 20px;
+      overflow: auto;
+    }
+    .main-header {
+      margin-bottom: 16px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .sections {
+      display: flex;
+      gap: 12px;
+      height: calc(100% - 40px);
+    }
+
+    .section {
+      flex: 1;
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 4px;
+    }
+
+    /* OKR tiles */
+    .okr-tile {
+      display: flex;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+      padding: 8px;
+      margin-bottom: 8px;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .okr-title {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    /* Traffic light */
+    .traffic-light {
+      width: 26px;
+      background: #111827;
+      border-radius: 14px;
+      padding: 5px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      margin-top: 2px;
+    }
+    .light {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #4b5563; /* off */
+      border: 1px solid #6b7280;
+    }
+    .light.red.on { background: #ef4444; border-color: #b91c1c; }
+    .light.amber.on { background: #f59e0b; border-color: #b45309; }
+    .light.green.on { background: #22c55e; border-color: #15803d; }
+
+    /* Tasks checklist */
+    .okr-content {
+      flex: 1;
+      font-size: 13px;
+    }
+    .tasks {
+      list-style: none;
+    }
+    .tasks li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+    .tasks input[type="checkbox"] {
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;OKR Leadership Dashboard&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>* { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 100vh;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f4f5f7;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* Sidebar */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.sidebar {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 220px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #1f2933;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #fff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.sidebar h1 {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.person-list {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>list-style: none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.person-list li {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.person-list li.active {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #2563eb;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.person-list li:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #374151;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* Main area */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.main {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex: 1;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>overflow: auto;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.main-header {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.sections {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: calc(100% - 40px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex: 1;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #ffffff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section-title {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-bottom: 1px solid #e5e7eb;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding-bottom: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* OKR tiles */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.okr-tile {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid #e5e7eb;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: flex-start;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.okr-title {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 13px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* Traffic light */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.traffic-light {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 26px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #111827;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 5px 4px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 2px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.light {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #4b5563; /* off */</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid #6b7280;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.light.red.on { background: #ef4444; border-color: #b91c1c; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.light.amber.on { background: #f59e0b; border-color: #b45309; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.light.green.on { background: #22c55e; border-color: #15803d; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* Tasks checklist */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.okr-content {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex: 1;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 13px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tasks {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>list-style: none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tasks li {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tasks input[type="checkbox"] {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="sidebar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;OKR Leadership Dashboard&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;ul class="person-list"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;li class="active" data-person="person1"&gt;Person 1&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;li data-person="person2"&gt;Person 2&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;li data-person="person3"&gt;Person 3&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="main"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="main-header" id="personTitle"&gt;Person 1&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="sections"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- Section 1 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="section" data-section="1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-title"&gt;Section 1&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 1&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 1&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 2&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 3&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 2&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 1&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 2&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 3&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 3&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 1&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 2&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="checkbox" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Task 3&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- Section 2 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="section" data-section="2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-title"&gt;Section 2&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Same pattern: three OKR tiles --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 1&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 1&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 2&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 3&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 2&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 1&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 2&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 3&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 3&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 1&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 2&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 3&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- Section 3 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="section" data-section="3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-title"&gt;Section 3&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 1&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 1&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 2&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 3&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 2&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 1&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 2&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 3&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="okr-tile" data-okr="3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="traffic-light"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light red" data-color="red"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light amber" data-color="amber"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="light green" data-color="green"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="okr-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="okr-title"&gt;OKR 3&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul class="tasks"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 1&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 2&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li&gt;&lt;input type="checkbox" /&gt;&lt;span&gt;Task 3&lt;/span&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Sidebar person switching (simple visual switch, same layout reused)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const personItems = document.querySelectorAll('.person-list li');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const personTitle = document.getElementById('personTitle');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>personItems.forEach(li =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>li.addEventListener('click', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>personItems.forEach(i =&gt; i.classList.remove('active'));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>li.classList.add('active');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>personTitle.textContent = li.textContent;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Here you could later load person-specific OKR data</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Traffic light behavior: click a light to turn that one "on", others off</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.traffic-light').forEach(lightBlock =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>lightBlock.addEventListener('click', e =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const clicked = e.target.closest('.light');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (!clicked) return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const lights = lightBlock.querySelectorAll('.light');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>lights.forEach(l =&gt; l.classList.remove('on'));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>clicked.classList.add('on');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Make the whole task line toggle the checkbox</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.tasks li').forEach(li =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>li.addEventListener('click', e =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const checkbox = li.querySelector('input[type="checkbox"]');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (e.target === checkbox) return;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>checkbox.checked = !checkbox.checked;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <div class="sidebar">
+    <h1>OKR Leadership Dashboard</h1>
+    <ul class="person-list">
+      <li class="active" data-person="person1">Person 1</li>
+      <li data-person="person2">Person 2</li>
+      <li data-person="person3">Person 3</li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="main-header" id="personTitle">Person 1</div>
+    <div class="sections">
+      <!-- Section 1 -->
+      <div class="section" data-section="1">
+        <div class="section-title">Section 1</div>
+
+        <div class="okr-tile" data-okr="1">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 1</div>
+            <ul class="tasks">
+              <li>
+                <input type="checkbox" />
+                <span>Task 1</span>
+              </li>
+              <li>
+                <input type="checkbox" />
+                <span>Task 2</span>
+              </li>
+              <li>
+                <input type="checkbox" />
+                <span>Task 3</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="okr-tile" data-okr="2">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 2</div>
+            <ul class="tasks">
+              <li>
+                <input type="checkbox" />
+                <span>Task 1</span>
+              </li>
+              <li>
+                <input type="checkbox" />
+                <span>Task 2</span>
+              </li>
+              <li>
+                <input type="checkbox" />
+                <span>Task 3</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="okr-tile" data-okr="3">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 3</div>
+            <ul class="tasks">
+              <li>
+                <input type="checkbox" />
+                <span>Task 1</span>
+              </li>
+              <li>
+                <input type="checkbox" />
+                <span>Task 2</span>
+              </li>
+              <li>
+                <input type="checkbox" />
+                <span>Task 3</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="section" data-section="2">
+        <div class="section-title">Section 2</div>
+
+        <!-- Same pattern: three OKR tiles -->
+        <div class="okr-tile" data-okr="1">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 1</div>
+            <ul class="tasks">
+              <li><input type="checkbox" /><span>Task 1</span></li>
+              <li><input type="checkbox" /><span>Task 2</span></li>
+              <li><input type="checkbox" /><span>Task 3</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="okr-tile" data-okr="2">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 2</div>
+            <ul class="tasks">
+              <li><input type="checkbox" /><span>Task 1</span></li>
+              <li><input type="checkbox" /><span>Task 2</span></li>
+              <li><input type="checkbox" /><span>Task 3</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="okr-tile" data-okr="3">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 3</div>
+            <ul class="tasks">
+              <li><input type="checkbox" /><span>Task 1</span></li>
+              <li><input type="checkbox" /><span>Task 2</span></li>
+              <li><input type="checkbox" /><span>Task 3</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="section" data-section="3">
+        <div class="section-title">Section 3</div>
+
+        <div class="okr-tile" data-okr="1">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 1</div>
+            <ul class="tasks">
+              <li><input type="checkbox" /><span>Task 1</span></li>
+              <li><input type="checkbox" /><span>Task 2</span></li>
+              <li><input type="checkbox" /><span>Task 3</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="okr-tile" data-okr="2">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 2</div>
+            <ul class="tasks">
+              <li><input type="checkbox" /><span>Task 1</span></li>
+              <li><input type="checkbox" /><span>Task 2</span></li>
+              <li><input type="checkbox" /><span>Task 3</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="okr-tile" data-okr="3">
+          <div class="traffic-light">
+            <div class="light red" data-color="red"></div>
+            <div class="light amber" data-color="amber"></div>
+            <div class="light green" data-color="green"></div>
+          </div>
+          <div class="okr-content">
+            <div class="okr-title">OKR 3</div>
+            <ul class="tasks">
+              <li><input type="checkbox" /><span>Task 1</span></li>
+              <li><input type="checkbox" /><span>Task 2</span></li>
+              <li><input type="checkbox" /><span>Task 3</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sidebar person switching (simple visual switch, same layout reused)
+    const personItems = document.querySelectorAll('.person-list li');
+    const personTitle = document.getElementById('personTitle');
+
+    personItems.forEach(li => {
+      li.addEventListener('click', () => {
+        personItems.forEach(i => i.classList.remove('active'));
+        li.classList.add('active');
+        personTitle.textContent = li.textContent;
+        // Here you could later load person-specific OKR data
+      });
+    });
+
+    // Traffic light behavior: click a light to turn that one "on", others off
+    document.querySelectorAll('.traffic-light').forEach(lightBlock => {
+      lightBlock.addEventListener('click', e => {
+        const clicked = e.target.closest('.light');
+        if (!clicked) return;
+
+        const lights = lightBlock.querySelectorAll('.light');
+        lights.forEach(l => l.classList.remove('on'));
+        clicked.classList.add('on');
+      });
+    });
+
+    // Make the whole task line toggle the checkbox
+    document.querySelectorAll('.tasks li').forEach(li => {
+      li.addEventListener('click', e => {
+        const checkbox = li.querySelector('input[type="checkbox"]');
+        if (e.target === checkbox) return;
+        checkbox.checked = !checkbox.checked;
+      });
+    });
+  </script>
 </body>
 </html>
