@@ -5,355 +5,138 @@
   <title>OKR Leadership Dashboard</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-
-    body {
-      display: flex;
-      height: 100vh;
-      background: #f4f5f7;
-      color: #333;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 220px;
-      background: #1f2933;
-      color: #fff;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar h1 {
-      font-size: 16px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .person-list {
-      list-style: none;
-    }
-    .person-list li {
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .person-list li.active {
-      background: #2563eb;
-    }
-    .person-list li:hover {
-      background: #374151;
-    }
-
-    /* Main area */
-    .main {
-      flex: 1;
-      padding: 20px;
-      overflow: auto;
-    }
-    .main-header {
-      margin-bottom: 16px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .sections {
-      display: flex;
-      gap: 12px;
-      height: calc(100% - 40px);
-    }
-
-    .section {
-      flex: 1;
-      background: #ffffff;
-      border-radius: 6px;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-    }
-    .section-title {
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 8px;
-      border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 4px;
-    }
-
-    /* OKR tiles */
-    .okr-tile {
-      display: flex;
-      border-radius: 6px;
-      border: 1px solid #e5e7eb;
-      padding: 8px;
-      margin-bottom: 8px;
-      align-items: flex-start;
-      gap: 8px;
-    }
-    .okr-title {
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
-
-    /* Traffic light */
-    .traffic-light {
-      width: 26px;
-      background: #111827;
-      border-radius: 14px;
-      padding: 5px 4px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      margin-top: 2px;
-    }
-    .light {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #4b5563; /* off */
-      border: 1px solid #6b7280;
-    }
+    body { display: flex; height: 100vh; background: #f4f5f7; color: #333; }
+    .sidebar { width: 220px; background: #1f2933; color: #fff; padding: 20px 10px; display: flex; flex-direction: column; }
+    .sidebar h1 { font-size: 16px; margin-bottom: 20px; text-align: center; }
+    .person-list { list-style: none; }
+    .person-list li { padding: 10px 12px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+    .person-list li.active { background: #2563eb; }
+    .person-list li:hover { background: #374151; }
+    .main { flex: 1; padding: 20px; overflow: auto; }
+    .main-header { margin-bottom: 16px; font-size: 20px; font-weight: bold; }
+    .sections { display: flex; gap: 12px; height: calc(100% - 40px); }
+    .section { flex: 1; background: #ffffff; border-radius: 6px; padding: 10px; display: flex; flex-direction: column; }
+    .section-title { font-size: 14px; font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+    .okr-tile { display: flex; border-radius: 6px; border: 1px solid #e5e7eb; padding: 8px; margin-bottom: 8px; align-items: flex-start; gap: 8px; }
+    .okr-title { font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+    .traffic-light { width: 26px; background: #111827; border-radius: 14px; padding: 5px 4px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; margin-top: 2px; }
+    .light { width: 14px; height: 14px; border-radius: 50%; background: #4b5563; border: 1px solid #6b7280; }
     .light.red.on { background: #ef4444; border-color: #b91c1c; }
     .light.amber.on { background: #f59e0b; border-color: #b45309; }
     .light.green.on { background: #22c55e; border-color: #15803d; }
-
-    /* Tasks checklist */
-    .okr-content {
-      flex: 1;
-      font-size: 13px;
-    }
-    .tasks {
-      list-style: none;
-    }
-    .tasks li {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 4px;
-      cursor: pointer;
-    }
-    .tasks input[type="checkbox"] {
-      cursor: pointer;
-    }
-
+    .okr-content { flex: 1; font-size: 13px; }
+    .tasks { list-style: none; }
+    .tasks li { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; cursor: pointer; }
+    .tasks input[type="checkbox"] { cursor: pointer; }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h1>OKR Leadership Dashboard</h1>
-    <ul class="person-list">
-      <li class="active" data-person="person1">Person 1</li>
-      <li data-person="person2">Person 2</li>
-      <li data-person="person3">Person 3</li>
-    </ul>
-  </div>
 
-  <div class="main">
-    <div class="main-header" id="personTitle">Person 1</div>
-    <div class="sections">
-      <!-- Section 1 -->
-      <div class="section" data-section="1">
-        <div class="section-title">Section 1</div>
+<div class="sidebar">
+  <h1>OKR Leadership Dashboard</h1>
+  <ul class="person-list">
+    <li class="active" data-person="person1">Person 1</li>
+    <li data-person="person2">Person 2</li>
+    <li data-person="person3">Person 3</li>
+  </ul>
+</div>
 
-        <div class="okr-tile" data-okr="1">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 1</div>
-            <ul class="tasks">
-              <li>
-                <input type="checkbox" />
-                <span>Task 1</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>Task 2</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>Task 3</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+<div class="main">
+  <div class="main-header" id="personTitle">Person 1</div>
+  <div class="sections">
 
-        <div class="okr-tile" data-okr="2">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 2</div>
-            <ul class="tasks">
-              <li>
-                <input type="checkbox" />
-                <span>Task 1</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>Task 2</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>Task 3</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="okr-tile" data-okr="3">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 3</div>
-            <ul class="tasks">
-              <li>
-                <input type="checkbox" />
-                <span>Task 1</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>Task 2</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>Task 3</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+    <div class="section" data-section="1">
+      <div class="section-title">Section 1</div>
+      <div class="okr-tile" data-okr="1">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
       </div>
-
-      <!-- Section 2 -->
-      <div class="section" data-section="2">
-        <div class="section-title">Section 2</div>
-
-        <!-- Same pattern: three OKR tiles -->
-        <div class="okr-tile" data-okr="1">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 1</div>
-            <ul class="tasks">
-              <li><input type="checkbox" /><span>Task 1</span></li>
-              <li><input type="checkbox" /><span>Task 2</span></li>
-              <li><input type="checkbox" /><span>Task 3</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="okr-tile" data-okr="2">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 2</div>
-            <ul class="tasks">
-              <li><input type="checkbox" /><span>Task 1</span></li>
-              <li><input type="checkbox" /><span>Task 2</span></li>
-              <li><input type="checkbox" /><span>Task 3</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="okr-tile" data-okr="3">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 3</div>
-            <ul class="tasks">
-              <li><input type="checkbox" /><span>Task 1</span></li>
-              <li><input type="checkbox" /><span>Task 2</span></li>
-              <li><input type="checkbox" /><span>Task 3</span></li>
-            </ul>
-          </div>
-        </div>
+      <div class="okr-tile" data-okr="2">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
       </div>
-
-      <!-- Section 3 -->
-      <div class="section" data-section="3">
-        <div class="section-title">Section 3</div>
-
-        <div class="okr-tile" data-okr="1">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 1</div>
-            <ul class="tasks">
-              <li><input type="checkbox" /><span>Task 1</span></li>
-              <li><input type="checkbox" /><span>Task 2</span></li>
-              <li><input type="checkbox" /><span>Task 3</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="okr-tile" data-okr="2">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 2</div>
-            <ul class="tasks">
-              <li><input type="checkbox" /><span>Task 1</span></li>
-              <li><input type="checkbox" /><span>Task 2</span></li>
-              <li><input type="checkbox" /><span>Task 3</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="okr-tile" data-okr="3">
-          <div class="traffic-light">
-            <div class="light red" data-color="red"></div>
-            <div class="light amber" data-color="amber"></div>
-            <div class="light green" data-color="green"></div>
-          </div>
-          <div class="okr-content">
-            <div class="okr-title">OKR 3</div>
-            <ul class="tasks">
-              <li><input type="checkbox" /><span>Task 1</span></li>
-              <li><input type="checkbox" /><span>Task 2</span></li>
-              <li><input type="checkbox" /><span>Task 3</span></li>
-            </ul>
-          </div>
-        </div>
+      <div class="okr-tile" data-okr="3">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
       </div>
     </div>
+
+    <div class="section" data-section="2">
+      <div class="section-title">Section 2</div>
+      <div class="okr-tile" data-okr="1">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
+      </div>
+      <div class="okr-tile" data-okr="2">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
+      </div>
+      <div class="okr-tile" data-okr="3">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
+      </div>
+    </div>
+
+    <div class="section" data-section="3">
+      <div class="section-title">Section 3</div>
+      <div class="okr-tile" data-okr="1">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
+      </div>
+      <div class="okr-tile" data-okr="2">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
+      </div>
+      <div class="okr-tile" data-okr="3">
+        <div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div>
+        <div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div>
+      </div>
+    </div>
+
   </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCL525kQa0Mo24md7TViV8qtu1VYCivcRI",
+    authDomain: "okr-dashboard-f5958.firebaseapp.com",
+    databaseURL: "https://okr-dashboard-f5958-default-rtdb.firebaseio.com",
+    projectId: "okr-dashboard-f5958",
+    storageBucket: "okr-dashboard-f5958.firebasestorage.app",
+    messagingSenderId: "1017565007417",
+    appId: "1:1017565007417:web:ae67f32e0b9511245f47e8"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
   const personItems = document.querySelectorAll('.person-list li');
   const personTitle = document.getElementById('personTitle');
+  let currentPerson = 'person1';
+  let currentListener = null;
 
-  // Save + restore active person
-  const savedPerson = localStorage.getItem('activePerson');
-  if (savedPerson) {
-    personItems.forEach(i => i.classList.remove('active'));
-    const target = document.querySelector(`[data-person="${savedPerson}"]`);
-    if (target) {
-      target.classList.add('active');
-      personTitle.textContent = target.textContent;
-    }
+  function applyState(data) {
+    data = data || {};
+    document.querySelectorAll('.traffic-light').forEach((block, i) => {
+      const lights = block.querySelectorAll('.light');
+      lights.forEach(l => l.classList.remove('on'));
+      const saved = data.lights && data.lights['b' + i];
+      if (saved !== undefined && lights[saved]) lights[saved].classList.add('on');
+    });
+    document.querySelectorAll('.tasks input[type="checkbox"]').forEach((cb, i) => {
+      cb.checked = !!(data.tasks && data.tasks['t' + i]);
+    });
+  }
+
+  function loadPerson(personKey) {
+    if (currentListener) db.ref(`dashboard/${currentPerson}`).off('value', currentListener);
+    currentPerson = personKey;
+    currentListener = db.ref(`dashboard/${currentPerson}`).on('value', snapshot => {
+      applyState(snapshot.val());
+    });
   }
 
   personItems.forEach(li => {
@@ -361,48 +144,37 @@
       personItems.forEach(i => i.classList.remove('active'));
       li.classList.add('active');
       personTitle.textContent = li.textContent;
-      localStorage.setItem('activePerson', li.dataset.person);
+      loadPerson(li.dataset.person);
     });
   });
 
-  // Save + restore traffic lights
-  document.querySelectorAll('.traffic-light').forEach((lightBlock, blockIndex) => {
-    const savedLight = localStorage.getItem(`light_${blockIndex}`);
-    if (savedLight !== null) {
-      const lights = lightBlock.querySelectorAll('.light');
-      lights.forEach(l => l.classList.remove('on'));
-      if (lights[savedLight]) lights[savedLight].classList.add('on');
-    }
+  loadPerson('person1');
 
-    lightBlock.addEventListener('click', e => {
+  document.querySelectorAll('.traffic-light').forEach((block, blockIndex) => {
+    block.addEventListener('click', e => {
       const clicked = e.target.closest('.light');
       if (!clicked) return;
-      const lights = lightBlock.querySelectorAll('.light');
-      lights.forEach(l => l.classList.remove('on'));
-      clicked.classList.add('on');
+      const lights = block.querySelectorAll('.light');
       const index = Array.from(lights).indexOf(clicked);
-      localStorage.setItem(`light_${blockIndex}`, index);
+      db.ref(`dashboard/${currentPerson}/lights/b${blockIndex}`).set(index);
     });
   });
 
-  // Save + restore checkboxes
-  document.querySelectorAll('.tasks input[type="checkbox"]').forEach((checkbox, i) => {
-    checkbox.checked = localStorage.getItem(`task_${i}`) === 'true';
-
-    checkbox.addEventListener('change', () => {
-      localStorage.setItem(`task_${i}`, checkbox.checked);
+  document.querySelectorAll('.tasks input[type="checkbox"]').forEach((cb, i) => {
+    cb.addEventListener('change', () => {
+      db.ref(`dashboard/${currentPerson}/tasks/t${i}`).set(cb.checked);
     });
   });
 
-  // Make the whole task line toggle the checkbox
   document.querySelectorAll('.tasks li').forEach(li => {
     li.addEventListener('click', e => {
-      const checkbox = li.querySelector('input[type="checkbox"]');
-      if (e.target === checkbox) return;
-      checkbox.checked = !checkbox.checked;
-      checkbox.dispatchEvent(new Event('change'));
+      const cb = li.querySelector('input[type="checkbox"]');
+      if (e.target === cb) return;
+      cb.checked = !cb.checked;
+      cb.dispatchEvent(new Event('change'));
     });
   });
 </script>
+
 </body>
 </html>
