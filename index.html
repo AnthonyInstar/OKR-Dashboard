@@ -341,40 +341,68 @@
     </div>
   </div>
 
-  <script>
-    // Sidebar person switching (simple visual switch, same layout reused)
-    const personItems = document.querySelectorAll('.person-list li');
-    const personTitle = document.getElementById('personTitle');
+<script>
+  const personItems = document.querySelectorAll('.person-list li');
+  const personTitle = document.getElementById('personTitle');
 
-    personItems.forEach(li => {
-      li.addEventListener('click', () => {
-        personItems.forEach(i => i.classList.remove('active'));
-        li.classList.add('active');
-        personTitle.textContent = li.textContent;
-        // Here you could later load person-specific OKR data
-      });
+  // Save + restore active person
+  const savedPerson = localStorage.getItem('activePerson');
+  if (savedPerson) {
+    personItems.forEach(i => i.classList.remove('active'));
+    const target = document.querySelector(`[data-person="${savedPerson}"]`);
+    if (target) {
+      target.classList.add('active');
+      personTitle.textContent = target.textContent;
+    }
+  }
+
+  personItems.forEach(li => {
+    li.addEventListener('click', () => {
+      personItems.forEach(i => i.classList.remove('active'));
+      li.classList.add('active');
+      personTitle.textContent = li.textContent;
+      localStorage.setItem('activePerson', li.dataset.person);
     });
+  });
 
-    // Traffic light behavior: click a light to turn that one "on", others off
-    document.querySelectorAll('.traffic-light').forEach(lightBlock => {
-      lightBlock.addEventListener('click', e => {
-        const clicked = e.target.closest('.light');
-        if (!clicked) return;
+  // Save + restore traffic lights
+  document.querySelectorAll('.traffic-light').forEach((lightBlock, blockIndex) => {
+    const savedLight = localStorage.getItem(`light_${blockIndex}`);
+    if (savedLight !== null) {
+      const lights = lightBlock.querySelectorAll('.light');
+      lights.forEach(l => l.classList.remove('on'));
+      if (lights[savedLight]) lights[savedLight].classList.add('on');
+    }
 
-        const lights = lightBlock.querySelectorAll('.light');
-        lights.forEach(l => l.classList.remove('on'));
-        clicked.classList.add('on');
-      });
+    lightBlock.addEventListener('click', e => {
+      const clicked = e.target.closest('.light');
+      if (!clicked) return;
+      const lights = lightBlock.querySelectorAll('.light');
+      lights.forEach(l => l.classList.remove('on'));
+      clicked.classList.add('on');
+      const index = Array.from(lights).indexOf(clicked);
+      localStorage.setItem(`light_${blockIndex}`, index);
     });
+  });
 
-    // Make the whole task line toggle the checkbox
-    document.querySelectorAll('.tasks li').forEach(li => {
-      li.addEventListener('click', e => {
-        const checkbox = li.querySelector('input[type="checkbox"]');
-        if (e.target === checkbox) return;
-        checkbox.checked = !checkbox.checked;
-      });
+  // Save + restore checkboxes
+  document.querySelectorAll('.tasks input[type="checkbox"]').forEach((checkbox, i) => {
+    checkbox.checked = localStorage.getItem(`task_${i}`) === 'true';
+
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(`task_${i}`, checkbox.checked);
     });
-  </script>
+  });
+
+  // Make the whole task line toggle the checkbox
+  document.querySelectorAll('.tasks li').forEach(li => {
+    li.addEventListener('click', e => {
+      const checkbox = li.querySelector('input[type="checkbox"]');
+      if (e.target === checkbox) return;
+      checkbox.checked = !checkbox.checked;
+      checkbox.dispatchEvent(new Event('change'));
+    });
+  });
+</script>
 </body>
 </html>
