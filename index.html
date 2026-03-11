@@ -26,11 +26,18 @@
 
     /* Dashboard */
     #dashboard { display: none; width: 100%; height: 100%; }
-    .sidebar { width: 220px; background: #1f2933; color: #fff; padding: 20px 10px; display: flex; flex-direction: column; flex-shrink: 0; }
+    .sidebar {
+      width: 220px; background: #1f2933; color: #fff; padding: 20px 10px;
+      display: flex; flex-direction: column; flex-shrink: 0;
+    }
     .sidebar h1 { font-size: 16px; margin-bottom: 20px; text-align: center; }
-    .logout-btn { margin-top: auto; background: #374151; color: #fff; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    .logout-btn {
+      margin-top: auto; background: #374151; color: #fff; border: none;
+      padding: 8px; border-radius: 4px; cursor: pointer; font-size: 13px;
+    }
     .logout-btn:hover { background: #4b5563; }
 
+    /* Overview nav item */
     .nav-overview {
       padding: 10px 12px; margin-bottom: 4px; border-radius: 4px;
       cursor: pointer; font-size: 14px; font-weight: bold;
@@ -39,54 +46,151 @@
     .nav-overview.active { background: #2563eb; color: #fff; }
     .nav-overview:hover { background: #1d4ed8; color: #fff; }
     .nav-divider { border: none; border-top: 1px solid #374151; margin: 10px 0; }
-    .nav-label { font-size: 11px; color: #6b7280; text-transform: uppercase; padding: 0 12px; margin-bottom: 6px; letter-spacing: 0.05em; }
+    .nav-label {
+      font-size: 11px; color: #6b7280; text-transform: uppercase;
+      padding: 0 12px; margin-bottom: 6px; letter-spacing: 0.05em;
+    }
 
+    /* Person list */
     .person-list { list-style: none; }
-    .person-list li { padding: 10px 12px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+    .person-list li {
+      padding: 10px 12px; margin-bottom: 8px; border-radius: 4px;
+      cursor: pointer; font-size: 14px;
+    }
     .person-list li.active { background: #2563eb; }
     .person-list li:hover { background: #374151; }
 
-    .main { flex: 1; padding: 20px; overflow: auto; display: flex; flex-direction: column; }
+    /* Main area */
+    .main {
+      flex: 1; padding: 20px; overflow: auto;
+      display: flex; flex-direction: column;
+    }
     .main-header { margin-bottom: 16px; font-size: 20px; font-weight: bold; }
 
-    /* Overview panel */
+    /* Person panel */
+    #person-panel { flex: 1; display: none; flex-direction: column; }
+
+    .person-objective-block {
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      border: 1px solid #e5e7eb;
+    }
+    .person-objective-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .person-objective-header label {
+      font-weight: bold;
+    }
+    .person-objective-header input[type="text"] {
+      flex: 1;
+      font-size: 13px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      border: 1px solid #d1d5db;
+    }
+
+    .person-okr-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .person-okr-table th {
+      background: #f1f5f9;
+      padding: 6px 8px;
+      border: 1px solid #e5e7eb;
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #6b7280;
+      letter-spacing: 0.05em;
+    }
+    .person-okr-table td {
+      padding: 6px 8px;
+      border: 1px solid #e5e7eb;
+      vertical-align: middle;
+    }
+    .person-okr-table input[type="text"] {
+      width: 100%;
+      border-radius: 3px;
+      border: 1px solid #d1d5db;
+      padding: 3px 4px;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+    .person-okr-table select {
+      width: 100%;
+      border-radius: 3px;
+      border: 1px solid #d1d5db;
+      padding: 3px 4px;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      background: #fff;
+    }
+    .status-bubble {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin-left: 6px;
+      border: 1px solid #d1d5db;
+      vertical-align: middle;
+    }
+    .status-green  { background: #22c55e; border-color: #15803d; }
+    .status-orange { background: #f59e0b; border-color: #b45309; }
+    .status-red    { background: #ef4444; border-color: #b91c1c; }
+
+    /* OKR Overview panel */
     #overview-panel { display: none; flex: 1; overflow: auto; }
-    .objective-block { background: #fff; border-radius: 8px; margin-bottom: 24px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
-    .objective-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #1e3a5f; color: #fff; }
-    .objective-badge { background: #2563eb; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
+    .objective-block {
+      background: #fff; border-radius: 8px; margin-bottom: 24px;
+      overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    }
+    .objective-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px; background: #1e3a5f; color: #fff;
+    }
+    .objective-badge {
+      background: #2563eb; border-radius: 50%; width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; font-size: 13px; flex-shrink: 0;
+    }
     .objective-text { font-size: 15px; font-weight: bold; }
     .okr-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .okr-table th { background: #f1f5f9; padding: 8px 10px; text-align: left; border: 1px solid #e2e8f0; font-size: 11px; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; }
-    .okr-table td { padding: 6px 8px; border: 1px solid #e2e8f0; vertical-align: middle; }
-    .okr-table td.kr-num { font-weight: bold; color: #2563eb; width: 45px; text-align: center; white-space: nowrap; }
+    .okr-table th {
+      background: #f1f5f9; padding: 8px 10px; text-align: left;
+      border: 1px solid #e2e8f0; font-size: 11px; text-transform: uppercase;
+      color: #64748b; letter-spacing: 0.05em;
+    }
+    .okr-table td {
+      padding: 6px 8px; border: 1px solid #e2e8f0; vertical-align: middle;
+    }
+    .okr-table td.kr-num {
+      font-weight: bold; color: #2563eb; width: 45px;
+      text-align: center; white-space: nowrap;
+    }
     .okr-table td.kr-text { width: 28%; color: #374151; }
     .okr-table tr:nth-child(even) td { background: #f8fafc; }
-    .okr-table select, .okr-table input[type="text"] { width: 100%; border: none; background: transparent; font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333; }
-    .okr-table select:focus, .okr-table input[type="text"]:focus { background: #eff6ff; border-radius: 3px; }
-    .okr-table td.notes-col { min-width: 160px; }
-
-    /* Person panel – new layout */
-    #person-panel { flex: 1; display:none; flex-direction:column; }
-    .person-okr-table { width: 100%; border-collapse: collapse; font-size: 13px; background:#fff; }
-    .person-okr-table th { background:#f1f5f9; padding:8px 10px; border:1px solid #e2e8f0; font-size:11px; text-transform:uppercase; color:#64748b; letter-spacing:0.05em; }
-    .person-okr-table td { padding:6px 8px; border:1px solid #e2e8f0; vertical-align:top; }
-    .person-okr-table textarea { width:100%; border:none; resize:vertical; font-size:13px; font-family:Arial,sans-serif; padding:3px 4px; outline:none; background:transparent; }
-    .person-okr-table select { width:100%; border:none; background:transparent; font-size:13px; font-family:Arial,sans-serif; padding:3px 4px; outline:none; }
-    .person-okr-table .objective-cell { width:30%; }
-    .person-okr-table .kr-cell { width:30%; }
-    .person-okr-table .discuss-cell { width:30%; }
-    .person-okr-table .bubble-cell { width:80px; text-align:center; }
-    .status-bubble {
-      width:20px; height:20px; border-radius:50%; display:inline-block;
-      border:1px solid #d1d5db; background:#e5e7eb;
+    .okr-table select,
+    .okr-table input[type="text"] {
+      width: 100%; border: none; background: transparent; font-size: 13px;
+      font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333;
     }
-    .status-green { background:#22c55e; border-color:#15803d; }
-    .status-amber { background:#f59e0b; border-color:#b45309; }
-    .status-red { background:#ef4444; border-color:#b91c1c; }
+    .okr-table select:focus,
+    .okr-table input[type="text"]:focus {
+      background: #eff6ff; border-radius: 3px;
+    }
+    .okr-table td.notes-col { min-width: 160px; }
   </style>
 </head>
 <body>
 
+<!-- Login screen -->
 <div id="login-screen">
   <h1>OKR Leadership Dashboard</h1>
   <p>Sign in with your Google account to access</p>
@@ -97,6 +201,7 @@
   <div id="access-denied">⛔ Access denied. Your email is not authorized.</div>
 </div>
 
+<!-- Dashboard -->
 <div id="dashboard">
   <div class="sidebar">
     <h1>OKR Leadership Dashboard</h1>
@@ -119,95 +224,118 @@
   <div class="main">
     <div class="main-header" id="mainTitle">OKR Overview</div>
 
-    <!-- OKR Overview Panel (unchanged) -->
+    <!-- OKR Overview Panel -->
     <div id="overview-panel">
-      <!-- Objective blocks as in your version -->
-      <!-- ... keep your existing overview objectives here ... -->
-    </div>
 
-    <!-- Person Panel: one shared template for all 5 people -->
-    <div id="person-panel">
-      <table class="person-okr-table">
-        <thead>
-          <tr>
-            <th>Objective</th>
-            <th>Key Results (3 lines)</th>
-            <th>Quarter Target</th>
-            <th>Quarter Actuals</th>
-            <th></th>
-            <th>Discussions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Row 1 -->
-          <tr>
-            <td class="objective-cell">
-              <textarea rows="3" data-person-path="obj1"></textarea>
-            </td>
-            <td class="kr-cell">
-              <textarea rows="3" data-person-path="obj1kr"></textarea>
-            </td>
-            <td>
-              <select data-person-path="obj1target"></select>
-            </td>
-            <td>
-              <select data-person-path="obj1actual"></select>
-            </td>
-            <td class="bubble-cell">
-              <span class="status-bubble" data-person-path="obj1bubble"></span>
-            </td>
-            <td class="discuss-cell">
-              <textarea rows="3" data-person-path="obj1discuss"></textarea>
-            </td>
-          </tr>
-          <!-- Row 2 -->
-          <tr>
-            <td class="objective-cell">
-              <textarea rows="3" data-person-path="obj2"></textarea>
-            </td>
-            <td class="kr-cell">
-              <textarea rows="3" data-person-path="obj2kr"></textarea>
-            </td>
-            <td>
-              <select data-person-path="obj2target"></select>
-            </td>
-            <td>
-              <select data-person-path="obj2actual"></select>
-            </td>
-            <td class="bubble-cell">
-              <span class="status-bubble" data-person-path="obj2bubble"></span>
-            </td>
-            <td class="discuss-cell">
-              <textarea rows="3" data-person-path="obj2discuss"></textarea>
-            </td>
-          </tr>
-          <!-- Row 3 -->
-          <tr>
-            <td class="objective-cell">
-              <textarea rows="3" data-person-path="obj3"></textarea>
-            </td>
-            <td class="kr-cell">
-              <textarea rows="3" data-person-path="obj3kr"></textarea>
-            </td>
-            <td>
-              <select data-person-path="obj3target"></select>
-            </td>
-            <td>
-              <select data-person-path="obj3actual"></select>
-            </td>
-            <td class="bubble-cell">
-              <span class="status-bubble" data-person-path="obj3bubble"></span>
-            </td>
-            <td class="discuss-cell">
-              <textarea rows="3" data-person-path="obj3discuss"></textarea>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <!-- Objective 1 -->
+      <div class="objective-block">
+        <div class="objective-header">
+          <div class="objective-badge">O1</div>
+          <div class="objective-text">Objective 1</div>
+        </div>
+        <table class="okr-table">
+          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="kr-num">1.1</td><td class="kr-text">Key Result 1.1</td>
+              <td><select data-path="overview/obj1/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj1/kr1/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr1/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr1/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">1.2</td><td class="kr-text">Key Result 1.2</td>
+              <td><select data-path="overview/obj1/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj1/kr2/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr2/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr2/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">1.3</td><td class="kr-text">Key Result 1.3</td>
+              <td><select data-path="overview/obj1/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj1/kr3/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr3/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr3/notes" placeholder="Notes…"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  </div>
-</div>
+      <!-- Objective 2 -->
+      <div class="objective-block">
+        <div class="objective-header">
+          <div class="objective-badge">O2</div>
+          <div class="objective-text">Objective 2</div>
+        </div>
+        <table class="okr-table">
+          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="kr-num">2.1</td><td class="kr-text">Key Result 2.1</td>
+              <td><select data-path="overview/obj2/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj2/kr1/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr1/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr1/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">2.2</td><td class="kr-text">Key Result 2.2</td>
+              <td><select data-path="overview/obj2/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj2/kr2/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr2/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr2/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">2.3</td><td class="kr-text">Key Result 2.3</td>
+              <td><select data-path="overview/obj2/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj2/kr3/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr3/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr3/notes" placeholder="Notes…"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Objective 3 -->
+      <div class="objective-block">
+        <div class="objective-header">
+          <div class="objective-badge">O3</div>
+          <div class="objective-text">Objective 3</div>
+        </div>
+        <table class="okr-table">
+          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="kr-num">3.1</td><td class="kr-text">Key Result 3.1</td>
+              <td><select data-path="overview/obj3/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj3/kr1/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr1/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr1/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">3.2</td><td class="kr-text">Key Result 3.2</td>
+              <td><select data-path="overview/obj3/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj3/kr2/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr2/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr2/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">3.3</td><td class="kr-text">Key Result 3.3</td>
+              <td><select data-path="overview/obj3/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj3/kr3/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr3/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr3/notes" placeholder="Notes…"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- end overview-panel -->
+
+    <!-- Person Panel -->
+    <div id="person-panel"></div>
+
+  </div><!-- end main -->
+</div><!-- end dashboard -->
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -222,6 +350,9 @@
     "anna.nicholls@instarresearch.com"
   ];
 
+  const PERSON_OBJECTIVE_COUNT = 3;
+  const PERSON_KR_COUNT = 3;
+
   const firebaseConfig = {
     apiKey: "AIzaSyCL525kQa0Mo24md7TViV8qtu1VYCivcRI",
     authDomain: "okr-dashboard-f5958.firebaseapp.com",
@@ -231,6 +362,7 @@
     messagingSenderId: "1017565007417",
     appId: "1:1017565007417:web:ae67f32e0b9511245f47e8"
   };
+
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
   const auth = firebase.auth();
@@ -245,26 +377,38 @@
   const mainTitle = document.getElementById('mainTitle');
   const personItems = document.querySelectorAll('.person-list li');
 
-  // auth
+  let currentPerson = null;
+  let currentPersonListenerRef = null;
+  let overviewInitialized = false;
+  let personTablesInitialized = false;
+  const overviewDebounceTimers = {};
+  const personDebounceTimers = {};
+
+  // ── Auth ──
   auth.onAuthStateChanged(user => {
     if (user && ALLOWED_EMAILS.includes(user.email)) {
       loginScreen.style.display = 'none';
       dashboard.style.display = 'flex';
       initOverview();
+      initPersonTables();
       showOverview();
-      initPersonDropdowns();
     } else {
       loginScreen.style.display = 'flex';
       dashboard.style.display = 'none';
-      if (user) { auth.signOut(); accessDenied.style.display = 'block'; }
+      if (user) {
+        auth.signOut();
+        accessDenied.style.display = 'block';
+      }
     }
   });
 
-  document.getElementById('login-btn').addEventListener('click', () =>
-    auth.signInWithPopup(provider).catch(console.error)
-  );
+  document.getElementById('login-btn').addEventListener('click', () => {
+    auth.signInWithPopup(provider).catch(console.error);
+  });
+
   document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
 
+  // ── Navigation ──
   function showOverview() {
     overviewPanel.style.display = 'block';
     personPanel.style.display = 'none';
@@ -272,11 +416,8 @@
     navOverview.classList.add('active');
     personItems.forEach(i => i.classList.remove('active'));
   }
-  navOverview.addEventListener('click', showOverview);
 
-  // person switching
-  let currentPerson = null;
-  let currentPersonListener = null;
+  navOverview.addEventListener('click', showOverview);
 
   personItems.forEach(li => {
     li.addEventListener('click', () => {
@@ -290,121 +431,272 @@
     });
   });
 
-  function initPersonDropdowns() {
-    const selects = personPanel.querySelectorAll('select[data-person-path$="target"], select[data-person-path$="actual"]');
-    selects.forEach(sel => {
-      sel.innerHTML = '';
-      for (let v = 0; v <= 100; v += 5) {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = v + '%';
-        sel.appendChild(opt);
-      }
-    });
+  // ── Helpers ──
+  function personPath(personKey, objIndex, krIndex, field) {
+    if (krIndex == null) {
+      return `people/${personKey}/obj${objIndex}/${field}`;
+    }
+    return `people/${personKey}/obj${objIndex}/kr${krIndex}/${field}`;
   }
 
-  function updateBubble(targetVal, actualVal, bubbleEl) {
-    bubbleEl.classList.remove('status-green','status-amber','status-red');
-    if (targetVal === '' || actualVal === '') return;
-    const t = Number(targetVal);
-    const a = Number(actualVal);
+  function populatePercentSelect(select) {
+    select.innerHTML = '';
+    for (let v = 0; v <= 100; v += 5) {
+      const opt = document.createElement('option');
+      opt.value = String(v);
+      opt.textContent = v + '%';
+      select.appendChild(opt);
+    }
+  }
+
+  function updateStatusBubble(targetSelect, actualSelect, bubble) {
+    const t = parseInt(targetSelect.value, 10) || 0;
+    const a = parseInt(actualSelect.value, 10) || 0;
     const diff = a - t;
-    const absDiff = Math.abs(diff);
-    if (absDiff <= 10) {
-      bubbleEl.classList.add('status-amber'); // +/-10% -> orange
-    } else if (diff > 10) {
-      bubbleEl.classList.add('status-green'); // >10% above -> green
+
+    bubble.classList.remove('status-green', 'status-orange', 'status-red');
+
+    if (Math.abs(diff) <= 10) {
+      bubble.classList.add('status-orange');
+    } else if (diff < -10) {
+      bubble.classList.add('status-red');
     } else {
-      bubbleEl.classList.add('status-red');   // >10% below -> red
+      bubble.classList.add('status-green');
     }
   }
 
-  function bindPersonFields(personKey) {
-    const pathBase = 'persons/' + personKey;
-    const elements = personPanel.querySelectorAll('[data-person-path]');
-    const debounce = {};
+  function safePercentValue(value) {
+    const normalized = String(value ?? '0');
+    for (let v = 0; v <= 100; v += 5) {
+      if (normalized === String(v)) return normalized;
+    }
+    return '0';
+  }
 
-    elements.forEach(el => {
-      const fieldKey = el.getAttribute('data-person-path');
-      const fullPath = pathBase + '/' + fieldKey;
+  function createPersonObjectiveHTML(objIndex) {
+    let rowsHTML = '';
 
-      if (el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
-        const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
-        el.addEventListener(eventType, () => {
-          if (el.tagName === 'SELECT' && (fieldKey.endsWith('target') || fieldKey.endsWith('actual'))) {
-            // update bubble
-            const rowPrefix = fieldKey.replace(/(target|actual)$/,'');
-            const targetSel = personPanel.querySelector('select[data-person-path="'+rowPrefix+'target"]');
-            const actualSel = personPanel.querySelector('select[data-person-path="'+rowPrefix+'actual"]');
-            const bubble = personPanel.querySelector('.status-bubble[data-person-path="'+rowPrefix+'bubble"]');
-            updateBubble(targetSel.value, actualSel.value, bubble);
-          }
-          clearTimeout(debounce[fullPath]);
-          debounce[fullPath] = setTimeout(() => {
-            db.ref(fullPath).set(el.value);
-          }, el.tagName === 'SELECT' ? 0 : 500);
+    for (let krIndex = 1; krIndex <= PERSON_KR_COUNT; krIndex++) {
+      rowsHTML += `
+        <tr data-kr-index="${krIndex}">
+          <td><input type="text" class="kr-text"></td>
+          <td>
+            <select class="kr-target"></select>
+          </td>
+          <td>
+            <select class="kr-actual"></select>
+            <span class="status-bubble"></span>
+          </td>
+          <td><input type="text" class="kr-discussion"></td>
+        </tr>
+      `;
+    }
+
+    return `
+      <div class="person-objective-block" data-obj-index="${objIndex}">
+        <div class="person-objective-header">
+          <label>Objective ${objIndex}:</label>
+          <input type="text" class="person-objective-title" placeholder="Describe the objective…">
+        </div>
+        <table class="person-okr-table">
+          <thead>
+            <tr>
+              <th>Key Result</th>
+              <th>Quarter Target</th>
+              <th>Quarter Actuals</th>
+              <th>Discussions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHTML}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function renderPersonObjectives() {
+    let html = '';
+    for (let objIndex = 1; objIndex <= PERSON_OBJECTIVE_COUNT; objIndex++) {
+      html += createPersonObjectiveHTML(objIndex);
+    }
+    personPanel.innerHTML = html;
+  }
+
+  function clearPersonPanel() {
+    document.querySelectorAll('.person-objective-block').forEach(block => {
+      block.querySelector('.person-objective-title').value = '';
+
+      block.querySelectorAll('tbody tr').forEach(row => {
+        const krText = row.querySelector('.kr-text');
+        const targetSelect = row.querySelector('.kr-target');
+        const actualSelect = row.querySelector('.kr-actual');
+        const discussion = row.querySelector('.kr-discussion');
+        const bubble = row.querySelector('.status-bubble');
+
+        krText.value = '';
+        targetSelect.value = '0';
+        actualSelect.value = '0';
+        discussion.value = '';
+
+        updateStatusBubble(targetSelect, actualSelect, bubble);
+      });
+    });
+  }
+
+  function applyPersonData(data) {
+    document.querySelectorAll('.person-objective-block').forEach(block => {
+      const objIndex = block.dataset.objIndex;
+      const objKey = `obj${objIndex}`;
+      const objData = data[objKey] || {};
+
+      block.querySelector('.person-objective-title').value = objData.title || '';
+
+      block.querySelectorAll('tbody tr').forEach(row => {
+        const krIndex = row.dataset.krIndex;
+        const krKey = `kr${krIndex}`;
+        const krData = objData[krKey] || {};
+
+        const krText = row.querySelector('.kr-text');
+        const targetSelect = row.querySelector('.kr-target');
+        const actualSelect = row.querySelector('.kr-actual');
+        const discussion = row.querySelector('.kr-discussion');
+        const bubble = row.querySelector('.status-bubble');
+
+        krText.value = krData.text || '';
+        targetSelect.value = safePercentValue(krData.target);
+        actualSelect.value = safePercentValue(krData.actual);
+        discussion.value = krData.discussion || '';
+
+        updateStatusBubble(targetSelect, actualSelect, bubble);
+      });
+    });
+  }
+
+  function bindPersonField(el, pathBuilder, eventType) {
+    el.addEventListener(eventType, () => {
+      if (!currentPerson) return;
+
+      const key = pathBuilder();
+      clearTimeout(personDebounceTimers[key]);
+
+      personDebounceTimers[key] = setTimeout(() => {
+        db.ref(key).set(el.value);
+      }, el.tagName === 'SELECT' ? 0 : 800);
+    });
+  }
+
+  // ── Dynamic person UI + bindings ──
+  function initPersonTables() {
+    if (personTablesInitialized) return;
+    personTablesInitialized = true;
+
+    renderPersonObjectives();
+
+    document.querySelectorAll('.person-objective-block').forEach(block => {
+      const objIndex = Number(block.dataset.objIndex);
+      const titleInput = block.querySelector('.person-objective-title');
+
+      bindPersonField(
+        titleInput,
+        () => personPath(currentPerson, objIndex, null, 'title'),
+        'input'
+      );
+
+      block.querySelectorAll('tbody tr').forEach(row => {
+        const krIndex = Number(row.dataset.krIndex);
+        const targetSelect = row.querySelector('.kr-target');
+        const actualSelect = row.querySelector('.kr-actual');
+        const bubble = row.querySelector('.status-bubble');
+        const krText = row.querySelector('.kr-text');
+        const discussion = row.querySelector('.kr-discussion');
+
+        populatePercentSelect(targetSelect);
+        populatePercentSelect(actualSelect);
+
+        targetSelect.value = '0';
+        actualSelect.value = '0';
+        updateStatusBubble(targetSelect, actualSelect, bubble);
+
+        targetSelect.addEventListener('change', () => {
+          updateStatusBubble(targetSelect, actualSelect, bubble);
         });
-      }
+
+        actualSelect.addEventListener('change', () => {
+          updateStatusBubble(targetSelect, actualSelect, bubble);
+        });
+
+        bindPersonField(
+          krText,
+          () => personPath(currentPerson, objIndex, krIndex, 'text'),
+          'input'
+        );
+
+        bindPersonField(
+          targetSelect,
+          () => personPath(currentPerson, objIndex, krIndex, 'target'),
+          'change'
+        );
+
+        bindPersonField(
+          actualSelect,
+          () => personPath(currentPerson, objIndex, krIndex, 'actual'),
+          'change'
+        );
+
+        bindPersonField(
+          discussion,
+          () => personPath(currentPerson, objIndex, krIndex, 'discussion'),
+          'input'
+        );
+      });
     });
   }
 
+  // ── Person loading ──
   function loadPerson(personKey) {
-    if (currentPersonListener && currentPerson) {
-      db.ref('persons/' + currentPerson).off('value', currentPersonListener);
-    }
     currentPerson = personKey;
-    const pathBase = 'persons/' + currentPerson;
-    const elements = personPanel.querySelectorAll('[data-person-path]');
 
-    currentPersonListener = db.ref(pathBase).on('value', snap => {
-      const data = snap.val() || {};
-      elements.forEach(el => {
-        const key = el.getAttribute('data-person-path');
-        const bubbleEl = el.classList.contains('status-bubble') ? el : null;
-        const val = data[key] ?? '';
+    if (currentPersonListenerRef) {
+      currentPersonListenerRef.off();
+    }
 
-        if (bubbleEl) {
-          // bubble has no stored value, infer from target/actual
-          const rowPrefix = key.replace('bubble','');
-          const t = data[rowPrefix + 'target'] ?? '';
-          const a = data[rowPrefix + 'actual'] ?? '';
-          updateBubble(t, a, bubbleEl);
-        } else {
-          if (el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
-            el.value = val;
-          }
-        }
-      });
+    clearPersonPanel();
 
-      // after all values set, recompute bubbles
-      ['obj1','obj2','obj3'].forEach(prefix => {
-        const t = data[prefix+'target'] ?? '';
-        const a = data[prefix+'actual'] ?? '';
-        const bubble = personPanel.querySelector('.status-bubble[data-person-path="'+prefix+'bubble"]');
-        if (bubble) updateBubble(t,a,bubble);
-      });
+    currentPersonListenerRef = db.ref(`people/${personKey}`);
+    currentPersonListenerRef.on('value', snapshot => {
+      const data = snapshot.val() || {};
+      applyPersonData(data);
     });
-
-    bindPersonFields(personKey);
   }
 
-  // Overview sync (same logic you had before)
+  // ── OKR Overview sync ──
   function initOverview() {
+    if (overviewInitialized) return;
+    overviewInitialized = true;
+
     db.ref('overview').on('value', snapshot => {
       const data = snapshot.val() || {};
+
       document.querySelectorAll('[data-path]').forEach(el => {
         const parts = el.dataset.path.split('/');
-        const val = (data[parts[1]] && data[parts[1]][parts[2]] && data[parts[1]][parts[2]][parts[3]]) || '';
+        const val = (
+          data[parts[1]] &&
+          data[parts[1]][parts[2]] &&
+          data[parts[1]][parts[2]][parts[3]]
+        ) || '';
+
         el.value = val;
       });
     });
 
-    const debounceTimers = {};
     document.querySelectorAll('[data-path]').forEach(el => {
       const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+
       el.addEventListener(eventType, () => {
-        clearTimeout(debounceTimers[el.dataset.path]);
-        debounceTimers[el.dataset.path] = setTimeout(() => {
+        clearTimeout(overviewDebounceTimers[el.dataset.path]);
+
+        overviewDebounceTimers[el.dataset.path] = setTimeout(() => {
           db.ref(el.dataset.path).set(el.value);
         }, el.tagName === 'SELECT' ? 0 : 800);
       });
