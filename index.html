@@ -67,9 +67,11 @@
     }
     .main-header { margin-bottom: 16px; font-size: 20px; font-weight: bold; }
 
-    /* Person panel */
-    #person-panel { flex: 1; display: none; flex-direction: column; }
+    /* Panels */
+    #overview-panel { display: none; flex: 1; overflow: auto; }
+    #person-panel { display: none; flex: 1; overflow: auto; }
 
+    /* Person panel */
     .person-objective-block {
       background: #ffffff;
       border-radius: 6px;
@@ -84,9 +86,7 @@
       margin-bottom: 8px;
       font-size: 13px;
     }
-    .person-objective-header label {
-      font-weight: bold;
-    }
+    .person-objective-header label { font-weight: bold; }
     .person-objective-header input[type="text"] {
       flex: 1;
       font-size: 13px;
@@ -145,52 +145,113 @@
     .status-orange { background: #f59e0b; border-color: #b45309; }
     .status-red    { background: #ef4444; border-color: #b91c1c; }
 
-    /* OKR Overview panel */
-    #overview-panel { display: none; flex: 1; overflow: auto; }
+    /* Overview panel */
     .objective-block {
-      background: #fff; border-radius: 8px; margin-bottom: 24px;
-      overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+      background: #fff;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
     }
     .objective-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 16px; background: #1e3a5f; color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: #1e3a5f;
+      color: #fff;
     }
     .objective-badge {
-      background: #2563eb; border-radius: 50%; width: 30px; height: 30px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: bold; font-size: 13px; flex-shrink: 0;
+      background: #2563eb;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 13px;
+      flex-shrink: 0;
     }
-    .objective-text { font-size: 15px; font-weight: bold; }
-    .okr-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .objective-text-input {
+      width: 100%;
+      border: none;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-size: 15px;
+      font-weight: bold;
+      outline: none;
+    }
+    .objective-text-input::placeholder { color: rgba(255,255,255,0.7); }
+
+    .okr-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
     .okr-table th {
-      background: #f1f5f9; padding: 8px 10px; text-align: left;
-      border: 1px solid #e2e8f0; font-size: 11px; text-transform: uppercase;
-      color: #64748b; letter-spacing: 0.05em;
+      background: #f1f5f9;
+      padding: 8px 10px;
+      text-align: left;
+      border: 1px solid #e2e8f0;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #64748b;
+      letter-spacing: 0.05em;
     }
     .okr-table td {
-      padding: 6px 8px; border: 1px solid #e2e8f0; vertical-align: middle;
+      padding: 6px 8px;
+      border: 1px solid #e2e8f0;
+      vertical-align: middle;
     }
     .okr-table td.kr-num {
-      font-weight: bold; color: #2563eb; width: 45px;
-      text-align: center; white-space: nowrap;
+      font-weight: bold;
+      color: #2563eb;
+      width: 45px;
+      text-align: center;
+      white-space: nowrap;
     }
     .okr-table td.kr-text { width: 28%; color: #374151; }
     .okr-table tr:nth-child(even) td { background: #f8fafc; }
-    .okr-table select,
-    .okr-table input[type="text"] {
-      width: 100%; border: none; background: transparent; font-size: 13px;
-      font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333;
+
+    .okr-table input[type="text"],
+    .okr-table select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      padding: 3px 4px;
+      outline: none;
+      color: #333;
     }
-    .okr-table select:focus,
-    .okr-table input[type="text"]:focus {
-      background: #eff6ff; border-radius: 3px;
+    .okr-table input[type="text"]:focus,
+    .okr-table select:focus {
+      background: #eff6ff;
+      border-radius: 3px;
     }
+
     .okr-table td.notes-col { min-width: 160px; }
+    .overview-kr-label {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: #374151;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      padding: 3px 4px;
+      outline: none;
+    }
+    .overview-kr-label:focus {
+      background: #eff6ff;
+      border-radius: 3px;
+    }
   </style>
 </head>
 <body>
 
-<!-- Login screen -->
 <div id="login-screen">
   <h1>OKR Leadership Dashboard</h1>
   <p>Sign in with your Google account to access</p>
@@ -201,7 +262,6 @@
   <div id="access-denied">⛔ Access denied. Your email is not authorized.</div>
 </div>
 
-<!-- Dashboard -->
 <div id="dashboard">
   <div class="sidebar">
     <h1>OKR Leadership Dashboard</h1>
@@ -223,119 +283,10 @@
 
   <div class="main">
     <div class="main-header" id="mainTitle">OKR Overview</div>
-
-    <!-- OKR Overview Panel -->
-    <div id="overview-panel">
-
-      <!-- Objective 1 -->
-      <div class="objective-block">
-        <div class="objective-header">
-          <div class="objective-badge">O1</div>
-          <div class="objective-text">Objective 1</div>
-        </div>
-        <table class="okr-table">
-          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="kr-num">1.1</td><td class="kr-text">Key Result 1.1</td>
-              <td><select data-path="overview/obj1/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj1/kr1/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj1/kr1/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj1/kr1/notes" placeholder="Notes…"/></td>
-            </tr>
-            <tr>
-              <td class="kr-num">1.2</td><td class="kr-text">Key Result 1.2</td>
-              <td><select data-path="overview/obj1/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj1/kr2/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj1/kr2/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj1/kr2/notes" placeholder="Notes…"/></td>
-            </tr>
-            <tr>
-              <td class="kr-num">1.3</td><td class="kr-text">Key Result 1.3</td>
-              <td><select data-path="overview/obj1/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj1/kr3/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj1/kr3/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj1/kr3/notes" placeholder="Notes…"/></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Objective 2 -->
-      <div class="objective-block">
-        <div class="objective-header">
-          <div class="objective-badge">O2</div>
-          <div class="objective-text">Objective 2</div>
-        </div>
-        <table class="okr-table">
-          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="kr-num">2.1</td><td class="kr-text">Key Result 2.1</td>
-              <td><select data-path="overview/obj2/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj2/kr1/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj2/kr1/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj2/kr1/notes" placeholder="Notes…"/></td>
-            </tr>
-            <tr>
-              <td class="kr-num">2.2</td><td class="kr-text">Key Result 2.2</td>
-              <td><select data-path="overview/obj2/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj2/kr2/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj2/kr2/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj2/kr2/notes" placeholder="Notes…"/></td>
-            </tr>
-            <tr>
-              <td class="kr-num">2.3</td><td class="kr-text">Key Result 2.3</td>
-              <td><select data-path="overview/obj2/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj2/kr3/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj2/kr3/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj2/kr3/notes" placeholder="Notes…"/></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Objective 3 -->
-      <div class="objective-block">
-        <div class="objective-header">
-          <div class="objective-badge">O3</div>
-          <div class="objective-text">Objective 3</div>
-        </div>
-        <table class="okr-table">
-          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="kr-num">3.1</td><td class="kr-text">Key Result 3.1</td>
-              <td><select data-path="overview/obj3/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj3/kr1/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj3/kr1/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj3/kr1/notes" placeholder="Notes…"/></td>
-            </tr>
-            <tr>
-              <td class="kr-num">3.2</td><td class="kr-text">Key Result 3.2</td>
-              <td><select data-path="overview/obj3/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj3/kr2/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj3/kr2/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj3/kr2/notes" placeholder="Notes…"/></td>
-            </tr>
-            <tr>
-              <td class="kr-num">3.3</td><td class="kr-text">Key Result 3.3</td>
-              <td><select data-path="overview/obj3/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
-              <td><input type="text" data-path="overview/obj3/kr3/target" placeholder="Target…"/></td>
-              <td><input type="text" data-path="overview/obj3/kr3/current" placeholder="Current…"/></td>
-              <td><input type="text" data-path="overview/obj3/kr3/notes" placeholder="Notes…"/></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div><!-- end overview-panel -->
-
-    <!-- Person Panel -->
+    <div id="overview-panel"></div>
     <div id="person-panel"></div>
-
-  </div><!-- end main -->
-</div><!-- end dashboard -->
+  </div>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -350,6 +301,9 @@
     "anna.nicholls@instarresearch.com"
   ];
 
+  const TEAM_MEMBERS = ["Leah", "Emily", "Anna", "Dalia", "Anthony"];
+  const OVERVIEW_OBJECTIVE_COUNT = 3;
+  const OVERVIEW_KR_COUNT = 3;
   const PERSON_OBJECTIVE_COUNT = 3;
   const PERSON_KR_COUNT = 3;
 
@@ -380,11 +334,10 @@
   let currentPerson = null;
   let currentPersonListenerRef = null;
   let overviewInitialized = false;
-  let personTablesInitialized = false;
+  let personInitialized = false;
   const overviewDebounceTimers = {};
   const personDebounceTimers = {};
 
-  // ── Auth ──
   auth.onAuthStateChanged(user => {
     if (user && ALLOWED_EMAILS.includes(user.email)) {
       loginScreen.style.display = 'none';
@@ -408,7 +361,6 @@
 
   document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
 
-  // ── Navigation ──
   function showOverview() {
     overviewPanel.style.display = 'block';
     personPanel.style.display = 'none';
@@ -431,7 +383,13 @@
     });
   });
 
-  // ── Helpers ──
+  function overviewPath(objIndex, field, krIndex = null, krField = null) {
+    if (krIndex === null) {
+      return `overview/obj${objIndex}/${field}`;
+    }
+    return `overview/obj${objIndex}/kr${krIndex}/${krField}`;
+  }
+
   function personPath(personKey, objIndex, krIndex, field) {
     if (krIndex == null) {
       return `people/${personKey}/obj${objIndex}/${field}`;
@@ -473,6 +431,81 @@
     return '0';
   }
 
+  function createOwnerOptions() {
+    return `<option value="">—</option>${TEAM_MEMBERS.map(name => `<option>${name}</option>`).join('')}`;
+  }
+
+  function createOverviewObjectiveHTML(objIndex) {
+    let rowsHTML = '';
+
+    for (let krIndex = 1; krIndex <= OVERVIEW_KR_COUNT; krIndex++) {
+      rowsHTML += `
+        <tr data-kr-index="${krIndex}">
+          <td class="kr-num">${objIndex}.${krIndex}</td>
+          <td class="kr-text">
+            <input
+              type="text"
+              class="overview-kr-label"
+              data-path="${overviewPath(objIndex, null, krIndex, 'label')}"
+              placeholder="Key Result ${objIndex}.${krIndex}"
+            />
+          </td>
+          <td>
+            <select data-path="${overviewPath(objIndex, null, krIndex, 'owner')}">
+              ${createOwnerOptions()}
+            </select>
+          </td>
+          <td>
+            <input type="text" data-path="${overviewPath(objIndex, null, krIndex, 'target')}" placeholder="Target…"/>
+          </td>
+          <td>
+            <input type="text" data-path="${overviewPath(objIndex, null, krIndex, 'current')}" placeholder="Current…"/>
+          </td>
+          <td class="notes-col">
+            <input type="text" data-path="${overviewPath(objIndex, null, krIndex, 'notes')}" placeholder="Notes…"/>
+          </td>
+        </tr>
+      `;
+    }
+
+    return `
+      <div class="objective-block" data-obj-index="${objIndex}">
+        <div class="objective-header">
+          <div class="objective-badge">O${objIndex}</div>
+          <input
+            type="text"
+            class="objective-text-input"
+            data-path="${overviewPath(objIndex, 'title')}"
+            placeholder="Objective ${objIndex}"
+          />
+        </div>
+        <table class="okr-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Key Results</th>
+              <th>Owner</th>
+              <th>Target</th>
+              <th>Current</th>
+              <th class="notes-col">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHTML}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function renderOverview() {
+    let html = '';
+    for (let objIndex = 1; objIndex <= OVERVIEW_OBJECTIVE_COUNT; objIndex++) {
+      html += createOverviewObjectiveHTML(objIndex);
+    }
+    overviewPanel.innerHTML = html;
+  }
+
   function createPersonObjectiveHTML(objIndex) {
     let rowsHTML = '';
 
@@ -480,9 +513,7 @@
       rowsHTML += `
         <tr data-kr-index="${krIndex}">
           <td><input type="text" class="kr-text"></td>
-          <td>
-            <select class="kr-target"></select>
-          </td>
+          <td><select class="kr-target"></select></td>
           <td>
             <select class="kr-actual"></select>
             <span class="status-bubble"></span>
@@ -523,6 +554,62 @@
     personPanel.innerHTML = html;
   }
 
+  function applyOverviewData(data) {
+    for (let objIndex = 1; objIndex <= OVERVIEW_OBJECTIVE_COUNT; objIndex++) {
+      const objData = data[`obj${objIndex}`] || {};
+
+      const titleEl = overviewPanel.querySelector(
+        `.objective-block[data-obj-index="${objIndex}"] .objective-text-input`
+      );
+      if (titleEl) {
+        titleEl.value = objData.title || '';
+      }
+
+      for (let krIndex = 1; krIndex <= OVERVIEW_KR_COUNT; krIndex++) {
+        const krData = objData[`kr${krIndex}`] || {};
+        const row = overviewPanel.querySelector(
+          `.objective-block[data-obj-index="${objIndex}"] tr[data-kr-index="${krIndex}"]`
+        );
+        if (!row) continue;
+
+        const labelInput = row.querySelector('.overview-kr-label');
+        const ownerSelect = row.querySelector(`select[data-path="${overviewPath(objIndex, null, krIndex, 'owner')}"]`);
+        const targetInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'target')}"]`);
+        const currentInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'current')}"]`);
+        const notesInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'notes')}"]`);
+
+        if (labelInput) labelInput.value = krData.label || '';
+        if (ownerSelect) ownerSelect.value = krData.owner || '';
+        if (targetInput) targetInput.value = krData.target || '';
+        if (currentInput) currentInput.value = krData.current || '';
+        if (notesInput) notesInput.value = krData.notes || '';
+      }
+    }
+  }
+
+  function initOverview() {
+    if (overviewInitialized) return;
+    overviewInitialized = true;
+
+    renderOverview();
+
+    db.ref('overview').on('value', snapshot => {
+      const data = snapshot.val() || {};
+      applyOverviewData(data);
+    });
+
+    document.querySelectorAll('#overview-panel [data-path]').forEach(el => {
+      const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+
+      el.addEventListener(eventType, () => {
+        clearTimeout(overviewDebounceTimers[el.dataset.path]);
+        overviewDebounceTimers[el.dataset.path] = setTimeout(() => {
+          db.ref(el.dataset.path).set(el.value);
+        }, el.tagName === 'SELECT' ? 0 : 800);
+      });
+    });
+  }
+
   function clearPersonPanel() {
     document.querySelectorAll('.person-objective-block').forEach(block => {
       block.querySelector('.person-objective-title').value = '';
@@ -538,7 +625,6 @@
         targetSelect.value = '0';
         actualSelect.value = '0';
         discussion.value = '';
-
         updateStatusBubble(targetSelect, actualSelect, bubble);
       });
     });
@@ -567,7 +653,6 @@
         targetSelect.value = safePercentValue(krData.target);
         actualSelect.value = safePercentValue(krData.actual);
         discussion.value = krData.discussion || '';
-
         updateStatusBubble(targetSelect, actualSelect, bubble);
       });
     });
@@ -577,19 +662,17 @@
     el.addEventListener(eventType, () => {
       if (!currentPerson) return;
 
-      const key = pathBuilder();
-      clearTimeout(personDebounceTimers[key]);
-
-      personDebounceTimers[key] = setTimeout(() => {
-        db.ref(key).set(el.value);
+      const path = pathBuilder();
+      clearTimeout(personDebounceTimers[path]);
+      personDebounceTimers[path] = setTimeout(() => {
+        db.ref(path).set(el.value);
       }, el.tagName === 'SELECT' ? 0 : 800);
     });
   }
 
-  // ── Dynamic person UI + bindings ──
   function initPersonTables() {
-    if (personTablesInitialized) return;
-    personTablesInitialized = true;
+    if (personInitialized) return;
+    personInitialized = true;
 
     renderPersonObjectives();
 
@@ -653,7 +736,6 @@
     });
   }
 
-  // ── Person loading ──
   function loadPerson(personKey) {
     currentPerson = personKey;
 
@@ -667,39 +749,6 @@
     currentPersonListenerRef.on('value', snapshot => {
       const data = snapshot.val() || {};
       applyPersonData(data);
-    });
-  }
-
-  // ── OKR Overview sync ──
-  function initOverview() {
-    if (overviewInitialized) return;
-    overviewInitialized = true;
-
-    db.ref('overview').on('value', snapshot => {
-      const data = snapshot.val() || {};
-
-      document.querySelectorAll('[data-path]').forEach(el => {
-        const parts = el.dataset.path.split('/');
-        const val = (
-          data[parts[1]] &&
-          data[parts[1]][parts[2]] &&
-          data[parts[1]][parts[2]][parts[3]]
-        ) || '';
-
-        el.value = val;
-      });
-    });
-
-    document.querySelectorAll('[data-path]').forEach(el => {
-      const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
-
-      el.addEventListener(eventType, () => {
-        clearTimeout(overviewDebounceTimers[el.dataset.path]);
-
-        overviewDebounceTimers[el.dataset.path] = setTimeout(() => {
-          db.ref(el.dataset.path).set(el.value);
-        }, el.tagName === 'SELECT' ? 0 : 800);
-      });
     });
   }
 </script>
