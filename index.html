@@ -26,17 +26,35 @@
 
     /* Dashboard */
     #dashboard { display: none; width: 100%; height: 100%; }
-    .sidebar { width: 220px; background: #1f2933; color: #fff; padding: 20px 10px; display: flex; flex-direction: column; }
+    .sidebar { width: 220px; background: #1f2933; color: #fff; padding: 20px 10px; display: flex; flex-direction: column; flex-shrink: 0; }
     .sidebar h1 { font-size: 16px; margin-bottom: 20px; text-align: center; }
     .logout-btn { margin-top: auto; background: #374151; color: #fff; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 13px; }
     .logout-btn:hover { background: #4b5563; }
+
+    /* Overview nav item */
+    .nav-overview {
+      padding: 10px 12px; margin-bottom: 4px; border-radius: 4px;
+      cursor: pointer; font-size: 14px; font-weight: bold;
+      color: #60a5fa; background: #111827;
+    }
+    .nav-overview.active { background: #2563eb; color: #fff; }
+    .nav-overview:hover { background: #1d4ed8; color: #fff; }
+    .nav-divider { border: none; border-top: 1px solid #374151; margin: 10px 0; }
+    .nav-label { font-size: 11px; color: #6b7280; text-transform: uppercase; padding: 0 12px; margin-bottom: 6px; letter-spacing: 0.05em; }
+
+    /* Person list */
     .person-list { list-style: none; }
     .person-list li { padding: 10px 12px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
     .person-list li.active { background: #2563eb; }
     .person-list li:hover { background: #374151; }
-    .main { flex: 1; padding: 20px; overflow: auto; }
+
+    /* Main area */
+    .main { flex: 1; padding: 20px; overflow: auto; display: flex; flex-direction: column; }
     .main-header { margin-bottom: 16px; font-size: 20px; font-weight: bold; }
-    .sections { display: flex; gap: 12px; height: calc(100% - 40px); }
+
+    /* Person panel */
+    #person-panel { flex: 1; display: flex; flex-direction: column; }
+    .sections { display: flex; gap: 12px; flex: 1; }
     .section { flex: 1; background: #ffffff; border-radius: 6px; padding: 10px; display: flex; flex-direction: column; }
     .section-title { font-size: 14px; font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
     .okr-tile { display: flex; border-radius: 6px; border: 1px solid #e5e7eb; padding: 8px; margin-bottom: 8px; align-items: flex-start; gap: 8px; }
@@ -50,6 +68,22 @@
     .tasks { list-style: none; }
     .tasks li { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; cursor: pointer; }
     .tasks input[type="checkbox"] { cursor: pointer; }
+
+    /* OKR Overview panel */
+    #overview-panel { display: none; flex: 1; overflow: auto; }
+    .objective-block { background: #fff; border-radius: 8px; margin-bottom: 24px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+    .objective-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #1e3a5f; color: #fff; }
+    .objective-badge { background: #2563eb; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
+    .objective-text { font-size: 15px; font-weight: bold; }
+    .okr-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .okr-table th { background: #f1f5f9; padding: 8px 10px; text-align: left; border: 1px solid #e2e8f0; font-size: 11px; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; }
+    .okr-table td { padding: 6px 8px; border: 1px solid #e2e8f0; vertical-align: middle; }
+    .okr-table td.kr-num { font-weight: bold; color: #2563eb; width: 45px; text-align: center; white-space: nowrap; }
+    .okr-table td.kr-text { width: 28%; color: #374151; }
+    .okr-table tr:nth-child(even) td { background: #f8fafc; }
+    .okr-table select, .okr-table input[type="text"] { width: 100%; border: none; background: transparent; font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333; }
+    .okr-table select:focus, .okr-table input[type="text"]:focus { background: #eff6ff; border-radius: 3px; }
+    .okr-table td.notes-col { min-width: 160px; }
   </style>
 </head>
 <body>
@@ -65,53 +99,170 @@
   <div id="access-denied">⛔ Access denied. Your email is not authorized.</div>
 </div>
 
-<!-- Dashboard (hidden until logged in) -->
+<!-- Dashboard -->
 <div id="dashboard">
   <div class="sidebar">
     <h1>OKR Leadership Dashboard</h1>
+
+    <div class="nav-overview active" id="nav-overview">📊 OKR Overview</div>
+
+    <hr class="nav-divider">
+    <div class="nav-label">Individual OKRs</div>
     <ul class="person-list">
-      <li class="active" data-person="person1">Person 1</li>
+      <li data-person="person1">Person 1</li>
       <li data-person="person2">Person 2</li>
       <li data-person="person3">Person 3</li>
     </ul>
+
     <button class="logout-btn" id="logout-btn">Sign out</button>
   </div>
 
   <div class="main">
-    <div class="main-header" id="personTitle">Person 1</div>
-    <div class="sections">
+    <div class="main-header" id="mainTitle">OKR Overview</div>
 
-      <div class="section">
-        <div class="section-title">Section 1</div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+    <!-- OKR Overview Panel -->
+    <div id="overview-panel">
+
+      <!-- Objective 1 -->
+      <div class="objective-block">
+        <div class="objective-header">
+          <div class="objective-badge">O1</div>
+          <div class="objective-text">Objective 1</div>
+        </div>
+        <table class="okr-table">
+          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="kr-num">1.1</td><td class="kr-text">Key Result 1.1</td>
+              <td><select data-path="overview/obj1/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj1/kr1/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr1/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr1/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">1.2</td><td class="kr-text">Key Result 1.2</td>
+              <td><select data-path="overview/obj1/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj1/kr2/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr2/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr2/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">1.3</td><td class="kr-text">Key Result 1.3</td>
+              <td><select data-path="overview/obj1/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj1/kr3/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr3/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj1/kr3/notes" placeholder="Notes…"/></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="section">
-        <div class="section-title">Section 2</div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+      <!-- Objective 2 -->
+      <div class="objective-block">
+        <div class="objective-header">
+          <div class="objective-badge">O2</div>
+          <div class="objective-text">Objective 2</div>
+        </div>
+        <table class="okr-table">
+          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="kr-num">2.1</td><td class="kr-text">Key Result 2.1</td>
+              <td><select data-path="overview/obj2/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj2/kr1/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr1/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr1/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">2.2</td><td class="kr-text">Key Result 2.2</td>
+              <td><select data-path="overview/obj2/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj2/kr2/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr2/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr2/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">2.3</td><td class="kr-text">Key Result 2.3</td>
+              <td><select data-path="overview/obj2/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj2/kr3/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr3/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj2/kr3/notes" placeholder="Notes…"/></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="section">
-        <div class="section-title">Section 3</div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
-        <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+      <!-- Objective 3 -->
+      <div class="objective-block">
+        <div class="objective-header">
+          <div class="objective-badge">O3</div>
+          <div class="objective-text">Objective 3</div>
+        </div>
+        <table class="okr-table">
+          <thead><tr><th>#</th><th>Key Results</th><th>Owner</th><th>Target</th><th>Current</th><th class="notes-col">Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="kr-num">3.1</td><td class="kr-text">Key Result 3.1</td>
+              <td><select data-path="overview/obj3/kr1/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj3/kr1/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr1/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr1/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">3.2</td><td class="kr-text">Key Result 3.2</td>
+              <td><select data-path="overview/obj3/kr2/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj3/kr2/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr2/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr2/notes" placeholder="Notes…"/></td>
+            </tr>
+            <tr>
+              <td class="kr-num">3.3</td><td class="kr-text">Key Result 3.3</td>
+              <td><select data-path="overview/obj3/kr3/owner"><option value="">—</option><option>Leah</option><option>Emily</option><option>Anna</option><option>Dalia</option><option>Anthony</option></select></td>
+              <td><input type="text" data-path="overview/obj3/kr3/target" placeholder="Target…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr3/current" placeholder="Current…"/></td>
+              <td><input type="text" data-path="overview/obj3/kr3/notes" placeholder="Notes…"/></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-    </div>
-  </div>
-</div>
+    </div><!-- end overview-panel -->
+
+    <!-- Person Panel -->
+    <div id="person-panel" style="display:none; flex:1; flex-direction:column;">
+      <div class="sections">
+
+        <div class="section">
+          <div class="section-title">Section 1</div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Section 2</div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Section 3</div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 1</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 2</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+          <div class="okr-tile"><div class="traffic-light"><div class="light red"></div><div class="light amber"></div><div class="light green"></div></div><div class="okr-content"><div class="okr-title">OKR 3</div><ul class="tasks"><li><input type="checkbox"/><span>Task 1</span></li><li><input type="checkbox"/><span>Task 2</span></li><li><input type="checkbox"/><span>Task 3</span></li></ul></div></div>
+        </div>
+
+      </div>
+    </div><!-- end person-panel -->
+
+  </div><!-- end main -->
+</div><!-- end dashboard -->
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
 <script>
-  // ── EDIT THIS LIST with the 5 Gmail/Google addresses allowed ──
   const ALLOWED_EMAILS = [
     "leah.fink@instarresearch.com",
     "dalia.tohme@instarresearch.com",
@@ -137,35 +288,42 @@
   const loginScreen = document.getElementById('login-screen');
   const dashboard = document.getElementById('dashboard');
   const accessDenied = document.getElementById('access-denied');
+  const navOverview = document.getElementById('nav-overview');
+  const overviewPanel = document.getElementById('overview-panel');
+  const personPanel = document.getElementById('person-panel');
+  const mainTitle = document.getElementById('mainTitle');
+  const personItems = document.querySelectorAll('.person-list li');
 
-  // Auth state: show dashboard or login screen
+  // ── Auth ──
   auth.onAuthStateChanged(user => {
     if (user && ALLOWED_EMAILS.includes(user.email)) {
       loginScreen.style.display = 'none';
       dashboard.style.display = 'flex';
-      loadPerson('person1');
+      initOverview();
+      showOverview();
     } else {
       loginScreen.style.display = 'flex';
       dashboard.style.display = 'none';
-      if (user) {
-        auth.signOut();
-        accessDenied.style.display = 'block';
-      }
+      if (user) { auth.signOut(); accessDenied.style.display = 'block'; }
     }
   });
 
-  document.getElementById('login-btn').addEventListener('click', () => {
-    auth.signInWithPopup(provider).catch(console.error);
-  });
+  document.getElementById('login-btn').addEventListener('click', () => auth.signInWithPopup(provider).catch(console.error));
+  document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
 
-  document.getElementById('logout-btn').addEventListener('click', () => {
-    auth.signOut();
-  });
+  // ── Navigation ──
+  function showOverview() {
+    overviewPanel.style.display = 'block';
+    personPanel.style.display = 'none';
+    mainTitle.textContent = 'OKR Overview';
+    navOverview.classList.add('active');
+    personItems.forEach(i => i.classList.remove('active'));
+  }
 
-  // ── Dashboard logic ──
-  const personItems = document.querySelectorAll('.person-list li');
-  const personTitle = document.getElementById('personTitle');
-  let currentPerson = 'person1';
+  navOverview.addEventListener('click', showOverview);
+
+  // ── Person switching ──
+  let currentPerson = null;
   let currentListener = null;
 
   function applyState(data) {
@@ -182,22 +340,24 @@
   }
 
   function loadPerson(personKey) {
-    if (currentListener) db.ref(`dashboard/${currentPerson}`).off('value', currentListener);
+    if (currentListener && currentPerson) db.ref(`dashboard/${currentPerson}`).off('value', currentListener);
     currentPerson = personKey;
-    currentListener = db.ref(`dashboard/${currentPerson}`).on('value', snapshot => {
-      applyState(snapshot.val());
-    });
+    currentListener = db.ref(`dashboard/${currentPerson}`).on('value', snapshot => applyState(snapshot.val()));
   }
 
   personItems.forEach(li => {
     li.addEventListener('click', () => {
       personItems.forEach(i => i.classList.remove('active'));
       li.classList.add('active');
-      personTitle.textContent = li.textContent;
+      navOverview.classList.remove('active');
+      overviewPanel.style.display = 'none';
+      personPanel.style.display = 'flex';
+      mainTitle.textContent = li.textContent;
       loadPerson(li.dataset.person);
     });
   });
 
+  // ── Traffic lights ──
   document.querySelectorAll('.traffic-light').forEach((block, blockIndex) => {
     block.addEventListener('click', e => {
       const clicked = e.target.closest('.light');
@@ -208,12 +368,10 @@
     });
   });
 
+  // ── Checkboxes ──
   document.querySelectorAll('.tasks input[type="checkbox"]').forEach((cb, i) => {
-    cb.addEventListener('change', () => {
-      db.ref(`dashboard/${currentPerson}/tasks/t${i}`).set(cb.checked);
-    });
+    cb.addEventListener('change', () => db.ref(`dashboard/${currentPerson}/tasks/t${i}`).set(cb.checked));
   });
-
   document.querySelectorAll('.tasks li').forEach(li => {
     li.addEventListener('click', e => {
       const cb = li.querySelector('input[type="checkbox"]');
@@ -222,6 +380,29 @@
       cb.dispatchEvent(new Event('change'));
     });
   });
+
+  // ── OKR Overview: real-time sync ──
+  function initOverview() {
+    db.ref('overview').on('value', snapshot => {
+      const data = snapshot.val() || {};
+      document.querySelectorAll('[data-path]').forEach(el => {
+        const parts = el.dataset.path.split('/');
+        const val = (data[parts[1]] && data[parts[1]][parts[2]] && data[parts[1]][parts[2]][parts[3]]) || '';
+        el.value = val;
+      });
+    });
+
+    const debounceTimers = {};
+    document.querySelectorAll('[data-path]').forEach(el => {
+      const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+      el.addEventListener(eventType, () => {
+        clearTimeout(debounceTimers[el.dataset.path]);
+        debounceTimers[el.dataset.path] = setTimeout(() => {
+          db.ref(el.dataset.path).set(el.value);
+        }, el.tagName === 'SELECT' ? 0 : 800);
+      });
+    });
+  }
 </script>
 </body>
 </html>
