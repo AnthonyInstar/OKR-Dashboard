@@ -7,7 +7,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body { display: flex; height: 100vh; background: #f4f5f7; color: #333; }
 
-    /* Login overlay */
     #login-screen {
       position: fixed; inset: 0; background: #1f2933;
       display: flex; flex-direction: column;
@@ -24,7 +23,6 @@
     #login-btn:hover { background: #f3f4f6; }
     #access-denied { color: #ef4444; margin-top: 20px; font-size: 14px; display: none; }
 
-    /* Dashboard */
     #dashboard { display: none; width: 100%; height: 100%; }
     .sidebar {
       width: 220px; background: #1f2933; color: #fff; padding: 20px 10px;
@@ -37,7 +35,6 @@
     }
     .logout-btn:hover { background: #4b5563; }
 
-    /* Overview nav item */
     .nav-overview {
       padding: 10px 12px; margin-bottom: 4px; border-radius: 4px;
       cursor: pointer; font-size: 14px; font-weight: bold;
@@ -51,7 +48,6 @@
       padding: 0 12px; margin-bottom: 6px; letter-spacing: 0.05em;
     }
 
-    /* Person list */
     .person-list { list-style: none; }
     .person-list li {
       padding: 10px 12px; margin-bottom: 8px; border-radius: 4px;
@@ -60,18 +56,182 @@
     .person-list li.active { background: #2563eb; }
     .person-list li:hover { background: #374151; }
 
-    /* Main area */
     .main {
       flex: 1; padding: 20px; overflow: auto;
       display: flex; flex-direction: column;
     }
     .main-header { margin-bottom: 16px; font-size: 20px; font-weight: bold; }
 
-    /* Panels */
     #overview-panel { display: none; flex: 1; overflow: auto; }
     #person-panel { display: none; flex: 1; overflow: auto; }
 
-    /* Person panel */
+    .objective-block {
+      background: #fff;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    }
+    .objective-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: #1e3a5f;
+      color: #fff;
+    }
+    .objective-badge {
+      background: #2563eb;
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; font-size: 13px; flex-shrink: 0;
+    }
+    .objective-text-input {
+      width: 100%;
+      border: none;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-size: 15px;
+      font-weight: bold;
+      outline: none;
+    }
+    .objective-text-input::placeholder { color: rgba(255,255,255,0.7); }
+
+    .okr-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .okr-table th {
+      background: #f1f5f9;
+      padding: 8px 10px;
+      text-align: left;
+      border: 1px solid #e2e8f0;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #64748b;
+      letter-spacing: 0.05em;
+    }
+    .okr-table td {
+      padding: 6px 8px;
+      border: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+    .okr-table td.kr-num {
+      font-weight: bold;
+      color: #2563eb;
+      width: 45px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .okr-table td.kr-text {
+      width: 22%;
+      color: #374151;
+    }
+    .okr-table tr:nth-child(even) td { background: #f8fafc; }
+    .okr-table input[type="text"],
+    .okr-table select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      padding: 3px 4px;
+      outline: none;
+      color: #333;
+    }
+    .okr-table input[type="text"]:focus,
+    .okr-table select:focus {
+      background: #eff6ff;
+      border-radius: 3px;
+    }
+    .okr-table td.notes-col { min-width: 160px; }
+    .overview-kr-label {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: #374151;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      padding: 3px 4px;
+      outline: none;
+    }
+
+    .quarterly-editor-row td {
+      background: #f8fafc !important;
+      padding: 10px 12px;
+      border-top: none;
+    }
+    .quarterly-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .quarter-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 8px;
+    }
+    .quarter-card-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+    }
+    .quarter-card-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      align-items: center;
+    }
+    .quarter-card-fields label {
+      font-size: 11px;
+      color: #6b7280;
+    }
+    .quarter-card-fields select {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 5px 6px;
+      background: #fff;
+      font-size: 12px;
+    }
+
+    .overview-roadmap-block {
+      background: #fff;
+      border-radius: 8px;
+      margin-top: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+      border: 1px solid #e5e7eb;
+    }
+    .overview-roadmap-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+    .overview-roadmap-subtitle {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+    .roadmap-wrap {
+      width: 100%;
+      overflow-x: auto;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      padding: 8px;
+    }
+    .roadmap-svg {
+      width: 100%;
+      min-width: 1100px;
+      display: block;
+    }
+
     .person-objective-block {
       background: #ffffff;
       border-radius: 6px;
@@ -145,108 +305,10 @@
     .status-orange { background: #f59e0b; border-color: #b45309; }
     .status-red    { background: #ef4444; border-color: #b91c1c; }
 
-    /* Overview panel */
-    .objective-block {
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 24px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-    }
-    .objective-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      background: #1e3a5f;
-      color: #fff;
-    }
-    .objective-badge {
-      background: #2563eb;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 13px;
-      flex-shrink: 0;
-    }
-    .objective-text-input {
-      width: 100%;
-      border: none;
-      background: rgba(255,255,255,0.12);
-      color: #fff;
-      border-radius: 4px;
-      padding: 6px 8px;
-      font-size: 15px;
-      font-weight: bold;
-      outline: none;
-    }
-    .objective-text-input::placeholder { color: rgba(255,255,255,0.7); }
-
-    .okr-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    .okr-table th {
-      background: #f1f5f9;
-      padding: 8px 10px;
-      text-align: left;
-      border: 1px solid #e2e8f0;
-      font-size: 11px;
-      text-transform: uppercase;
-      color: #64748b;
-      letter-spacing: 0.05em;
-    }
-    .okr-table td {
-      padding: 6px 8px;
-      border: 1px solid #e2e8f0;
-      vertical-align: middle;
-    }
-    .okr-table td.kr-num {
-      font-weight: bold;
-      color: #2563eb;
-      width: 45px;
-      text-align: center;
-      white-space: nowrap;
-    }
-    .okr-table td.kr-text { width: 28%; color: #374151; }
-    .okr-table tr:nth-child(even) td { background: #f8fafc; }
-
-    .okr-table input[type="text"],
-    .okr-table select {
-      width: 100%;
-      border: none;
-      background: transparent;
-      font-size: 13px;
-      font-family: Arial, sans-serif;
-      padding: 3px 4px;
-      outline: none;
-      color: #333;
-    }
-    .okr-table input[type="text"]:focus,
-    .okr-table select:focus {
-      background: #eff6ff;
-      border-radius: 3px;
-    }
-
-    .okr-table td.notes-col { min-width: 160px; }
-    .overview-kr-label {
-      width: 100%;
-      border: none;
-      background: transparent;
-      color: #374151;
-      font-size: 13px;
-      font-family: Arial, sans-serif;
-      padding: 3px 4px;
-      outline: none;
-    }
-    .overview-kr-label:focus {
-      background: #eff6ff;
-      border-radius: 3px;
+    @media (max-width: 1100px) {
+      .quarterly-grid {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+      }
     }
   </style>
 </head>
@@ -265,7 +327,6 @@
 <div id="dashboard">
   <div class="sidebar">
     <h1>OKR Leadership Dashboard</h1>
-
     <div class="nav-overview active" id="nav-overview">📊 OKR Overview</div>
 
     <hr class="nav-divider">
@@ -306,6 +367,9 @@
   const OVERVIEW_KR_COUNT = 3;
   const PERSON_OBJECTIVE_COUNT = 3;
   const PERSON_KR_COUNT = 3;
+  const QUARTERS = ["q1", "q2", "q3", "q4"];
+  const QUARTER_LABELS = { q1: "Q1", q2: "Q2", q3: "Q3", q4: "Q4" };
+  const OBJECTIVE_COLORS = ["#ef4444", "#b91c1c", "#9ca3af", "#6b7280"];
 
   const firebaseConfig = {
     apiKey: "AIzaSyCL525kQa0Mo24md7TViV8qtu1VYCivcRI",
@@ -335,6 +399,7 @@
   let currentPersonListenerRef = null;
   let overviewInitialized = false;
   let personInitialized = false;
+  let overviewCache = {};
   const overviewDebounceTimers = {};
   const personDebounceTimers = {};
 
@@ -383,18 +448,23 @@
     });
   });
 
-  function overviewPath(objIndex, field, krIndex = null, krField = null) {
-    if (krIndex === null) {
-      return `overview/obj${objIndex}/${field}`;
-    }
-    return `overview/obj${objIndex}/kr${krIndex}/${krField}`;
+  function overviewPath(objIndex, field, krIndex = null, krField = null, quarter = null, quarterField = null) {
+    if (krIndex === null) return `overview/obj${objIndex}/${field}`;
+    if (quarter === null) return `overview/obj${objIndex}/kr${krIndex}/${krField}`;
+    return `overview/obj${objIndex}/kr${krIndex}/quarters/${quarter}/${quarterField}`;
   }
 
   function personPath(personKey, objIndex, krIndex, field) {
-    if (krIndex == null) {
-      return `people/${personKey}/obj${objIndex}/${field}`;
-    }
+    if (krIndex == null) return `people/${personKey}/obj${objIndex}/${field}`;
     return `people/${personKey}/obj${objIndex}/kr${krIndex}/${field}`;
+  }
+
+  function quarterPercentOptions() {
+    let html = '';
+    for (let v = 0; v <= 100; v += 5) {
+      html += `<option value="${v}">${v}%</option>`;
+    }
+    return html;
   }
 
   function populatePercentSelect(select) {
@@ -407,22 +477,6 @@
     }
   }
 
-  function updateStatusBubble(targetSelect, actualSelect, bubble) {
-    const t = parseInt(targetSelect.value, 10) || 0;
-    const a = parseInt(actualSelect.value, 10) || 0;
-    const diff = a - t;
-
-    bubble.classList.remove('status-green', 'status-orange', 'status-red');
-
-    if (Math.abs(diff) <= 10) {
-      bubble.classList.add('status-orange');
-    } else if (diff < -10) {
-      bubble.classList.add('status-red');
-    } else {
-      bubble.classList.add('status-green');
-    }
-  }
-
   function safePercentValue(value) {
     const normalized = String(value ?? '0');
     for (let v = 0; v <= 100; v += 5) {
@@ -431,14 +485,51 @@
     return '0';
   }
 
+  function getProgressColor(target, actual) {
+    const t = parseInt(target, 10) || 0;
+    const a = parseInt(actual, 10) || 0;
+    const diff = a - t;
+    if (Math.abs(diff) <= 10) return '#f59e0b';
+    if (diff < -10) return '#ef4444';
+    return '#22c55e';
+  }
+
+  function updateStatusBubble(targetSelect, actualSelect, bubble) {
+    const color = getProgressColor(targetSelect.value, actualSelect.value);
+    bubble.classList.remove('status-green', 'status-orange', 'status-red');
+    if (color === '#22c55e') bubble.classList.add('status-green');
+    else if (color === '#f59e0b') bubble.classList.add('status-orange');
+    else bubble.classList.add('status-red');
+  }
+
   function createOwnerOptions() {
     return `<option value="">—</option>${TEAM_MEMBERS.map(name => `<option>${name}</option>`).join('')}`;
+  }
+
+  function createQuarterCardHTML(objIndex, krIndex, quarterKey) {
+    return `
+      <div class="quarter-card">
+        <div class="quarter-card-title">${QUARTER_LABELS[quarterKey]}</div>
+        <div class="quarter-card-fields">
+          <label>Target</label>
+          <select data-path="${overviewPath(objIndex, null, krIndex, null, quarterKey, 'target')}">
+            ${quarterPercentOptions()}
+          </select>
+          <label>Actual</label>
+          <select data-path="${overviewPath(objIndex, null, krIndex, null, quarterKey, 'actual')}">
+            ${quarterPercentOptions()}
+          </select>
+        </div>
+      </div>
+    `;
   }
 
   function createOverviewObjectiveHTML(objIndex) {
     let rowsHTML = '';
 
     for (let krIndex = 1; krIndex <= OVERVIEW_KR_COUNT; krIndex++) {
+      const quarterCards = QUARTERS.map(q => createQuarterCardHTML(objIndex, krIndex, q)).join('');
+
       rowsHTML += `
         <tr data-kr-index="${krIndex}">
           <td class="kr-num">${objIndex}.${krIndex}</td>
@@ -463,6 +554,13 @@
           </td>
           <td class="notes-col">
             <input type="text" data-path="${overviewPath(objIndex, null, krIndex, 'notes')}" placeholder="Notes…"/>
+          </td>
+        </tr>
+        <tr class="quarterly-editor-row" data-kr-quarters="${krIndex}">
+          <td colspan="6">
+            <div class="quarterly-grid">
+              ${quarterCards}
+            </div>
           </td>
         </tr>
       `;
@@ -498,12 +596,212 @@
     `;
   }
 
+  function renderRoadmap(container, data) {
+    const rows = [];
+    for (let objIndex = 1; objIndex <= OVERVIEW_OBJECTIVE_COUNT; objIndex++) {
+      const obj = data[`obj${objIndex}`] || {};
+      for (let krIndex = 1; krIndex <= OVERVIEW_KR_COUNT; krIndex++) {
+        const kr = obj[`kr${krIndex}`] || {};
+        rows.push({
+          objIndex,
+          krIndex,
+          objTitle: obj.title || `Objective ${objIndex}`,
+          krLabel: kr.label || `Key Result ${objIndex}.${krIndex}`,
+          quarters: kr.quarters || {}
+        });
+      }
+    }
+
+    const width = 1280;
+    const headerH = 54;
+    const rowH = 72;
+    const topPad = 20;
+    const bottomPad = 30;
+    const leftPanelW = 350;
+    const lineStartX = 410;
+    const qXs = { q1: 520, q2: 700, q3: 880, q4: 1060 };
+    const labelX = 1140;
+    const height = headerH + topPad + rows.length * rowH + bottomPad;
+
+    let svg = `
+      <svg class="roadmap-svg" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="${width}" height="${height}" fill="#f8fafc"/>
+        <text x="20" y="34" font-size="20" font-weight="700" fill="#111827">Quarterly KR Progress</text>
+        <text x="20" y="52" font-size="11" fill="#6b7280">Target = outlined triangle, Actual = filled circle, End marker = pentagon</text>
+    `;
+
+    for (let objIndex = 1; objIndex <= OVERVIEW_OBJECTIVE_COUNT; objIndex++) {
+      const startRow = (objIndex - 1) * OVERVIEW_KR_COUNT;
+      const blockY = headerH + topPad + startRow * rowH;
+      const blockH = OVERVIEW_KR_COUNT * rowH;
+      const fill = OBJECTIVE_COLORS[(objIndex - 1) % OBJECTIVE_COLORS.length];
+      const objTitle = (data[`obj${objIndex}`] || {}).title || `Objective ${objIndex}`;
+
+      svg += `
+        <rect x="20" y="${blockY}" width="290" height="${blockH}" rx="0" fill="${fill}" opacity="0.95"/>
+        <text x="40" y="${blockY + blockH/2 - 6}" font-size="16" font-weight="700" fill="#ffffff">${escapeXml(objTitle)}</text>
+      `;
+
+      for (let k = 1; k <= OVERVIEW_KR_COUNT; k++) {
+        const y = blockY + (k - 1) * rowH + rowH / 2 - 8;
+        svg += `
+          <text x="170" y="${y}" font-size="12" fill="#ffffff">KR ${objIndex}.${k}</text>
+        `;
+      }
+    }
+
+    svg += `
+      <line x1="340" y1="${headerH + topPad}" x2="340" y2="${height - bottomPad}" stroke="#6b7280" stroke-width="1.5"/>
+    `;
+
+    rows.forEach((row, idx) => {
+      const y = headerH + topPad + idx * rowH + rowH / 2;
+      const color = OBJECTIVE_COLORS[(row.objIndex - 1) % OBJECTIVE_COLORS.length];
+      const startCircleX = 430;
+
+      svg += `
+        <line x1="340" y1="${y}" x2="${startCircleX}" y2="${y - 18}" stroke="#6b7280" stroke-width="1.5"/>
+        <line x1="${startCircleX}" y1="${y - 18}" x2="${labelX - 24}" y2="${y - 56}" stroke="#6b7280" stroke-width="1.5"/>
+        <polygon points="${labelX - 4},${y - 72} ${labelX + 12},${y - 64} ${labelX + 8},${y - 46} ${labelX - 16},${y - 46} ${labelX - 20},${y - 64}" fill="${color}" stroke="#6b7280" stroke-width="1"/>
+        <text x="${labelX + 20}" y="${y - 57}" font-size="13" fill="#111827">${escapeXml(row.krLabel)}</text>
+      `;
+
+      svg += `
+        <circle cx="${startCircleX}" cy="${y - 18}" r="11" fill="${color}" stroke="#6b7280" stroke-width="1.5"/>
+      `;
+
+      QUARTERS.forEach((q, qIdx) => {
+        const qData = row.quarters[q] || {};
+        const target = safePercentValue(qData.target);
+        const actual = safePercentValue(qData.actual);
+        const x = qXs[q];
+        const targetY = y - 28 - (parseInt(target, 10) * 0.18);
+        const actualY = y - 28 - (parseInt(actual, 10) * 0.18);
+        const actualColor = getProgressColor(target, actual);
+
+        const tri = [
+          [x, targetY - 14],
+          [x - 16, targetY + 14],
+          [x + 16, targetY + 14]
+        ].map(p => p.join(',')).join(' ');
+
+        svg += `
+          <polygon points="${tri}" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+          <circle cx="${x + 26}" cy="${actualY}" r="8" fill="${actualColor}" stroke="#6b7280" stroke-width="1"/>
+          <text x="${x - 14}" y="${y + 18}" font-size="10" fill="#6b7280">${QUARTER_LABELS[q]}</text>
+        `;
+      });
+    });
+
+    svg += `
+      <g transform="translate(720, ${height - 16})">
+        <polygon points="0,-12 -12,10 12,10" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"></polygon>
+        <text x="20" y="4" font-size="11" fill="#374151">Quarter target</text>
+        <circle cx="126" cy="0" r="8" fill="#22c55e" stroke="#6b7280" stroke-width="1"></circle>
+        <text x="142" y="4" font-size="11" fill="#374151">Quarter actual</text>
+        <polygon points="280,-14 294,-6 290,12 270,12 266,-6" fill="#6b7280" stroke="#6b7280" stroke-width="1"></polygon>
+        <text x="304" y="4" font-size="11" fill="#374151">KR label marker</text>
+      </g>
+      </svg>
+    `;
+
+    container.innerHTML = svg;
+  }
+
+  function escapeXml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
   function renderOverview() {
     let html = '';
     for (let objIndex = 1; objIndex <= OVERVIEW_OBJECTIVE_COUNT; objIndex++) {
       html += createOverviewObjectiveHTML(objIndex);
     }
+
+    html += `
+      <div class="overview-roadmap-block">
+        <div class="overview-roadmap-title">Quarterly KR Progress</div>
+        <div class="overview-roadmap-subtitle">Read-only visual based on the quarterly target and actual values saved above.</div>
+        <div class="roadmap-wrap">
+          <div id="overview-roadmap"></div>
+        </div>
+      </div>
+    `;
+
     overviewPanel.innerHTML = html;
+  }
+
+  function applyOverviewData(data) {
+    overviewCache = data || {};
+
+    for (let objIndex = 1; objIndex <= OVERVIEW_OBJECTIVE_COUNT; objIndex++) {
+      const objData = data[`obj${objIndex}`] || {};
+
+      const titleEl = overviewPanel.querySelector(
+        `.objective-block[data-obj-index="${objIndex}"] .objective-text-input`
+      );
+      if (titleEl) titleEl.value = objData.title || '';
+
+      for (let krIndex = 1; krIndex <= OVERVIEW_KR_COUNT; krIndex++) {
+        const krData = objData[`kr${krIndex}`] || {};
+        const row = overviewPanel.querySelector(
+          `.objective-block[data-obj-index="${objIndex}"] tr[data-kr-index="${krIndex}"]`
+        );
+        if (!row) continue;
+
+        const labelInput = row.querySelector('.overview-kr-label');
+        const ownerSelect = row.querySelector(`select[data-path="${overviewPath(objIndex, null, krIndex, 'owner')}"]`);
+        const targetInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'target')}"]`);
+        const currentInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'current')}"]`);
+        const notesInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'notes')}"]`);
+
+        if (labelInput) labelInput.value = krData.label || '';
+        if (ownerSelect) ownerSelect.value = krData.owner || '';
+        if (targetInput) targetInput.value = krData.target || '';
+        if (currentInput) currentInput.value = krData.current || '';
+        if (notesInput) notesInput.value = krData.notes || '';
+
+        QUARTERS.forEach(q => {
+          const qData = (krData.quarters || {})[q] || {};
+          const targetSel = overviewPanel.querySelector(`select[data-path="${overviewPath(objIndex, null, krIndex, null, q, 'target')}"]`);
+          const actualSel = overviewPanel.querySelector(`select[data-path="${overviewPath(objIndex, null, krIndex, null, q, 'actual')}"]`);
+
+          if (targetSel) targetSel.value = safePercentValue(qData.target);
+          if (actualSel) actualSel.value = safePercentValue(qData.actual);
+        });
+      }
+    }
+
+    const roadmapEl = document.getElementById('overview-roadmap');
+    if (roadmapEl) renderRoadmap(roadmapEl, overviewCache);
+  }
+
+  function initOverview() {
+    if (overviewInitialized) return;
+    overviewInitialized = true;
+
+    renderOverview();
+
+    db.ref('overview').on('value', snapshot => {
+      const data = snapshot.val() || {};
+      applyOverviewData(data);
+    });
+
+    document.querySelectorAll('#overview-panel [data-path]').forEach(el => {
+      const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+
+      el.addEventListener(eventType, () => {
+        clearTimeout(overviewDebounceTimers[el.dataset.path]);
+        overviewDebounceTimers[el.dataset.path] = setTimeout(() => {
+          db.ref(el.dataset.path).set(el.value);
+        }, el.tagName === 'SELECT' ? 0 : 800);
+      });
+    });
   }
 
   function createPersonObjectiveHTML(objIndex) {
@@ -554,66 +852,9 @@
     personPanel.innerHTML = html;
   }
 
-  function applyOverviewData(data) {
-    for (let objIndex = 1; objIndex <= OVERVIEW_OBJECTIVE_COUNT; objIndex++) {
-      const objData = data[`obj${objIndex}`] || {};
-
-      const titleEl = overviewPanel.querySelector(
-        `.objective-block[data-obj-index="${objIndex}"] .objective-text-input`
-      );
-      if (titleEl) {
-        titleEl.value = objData.title || '';
-      }
-
-      for (let krIndex = 1; krIndex <= OVERVIEW_KR_COUNT; krIndex++) {
-        const krData = objData[`kr${krIndex}`] || {};
-        const row = overviewPanel.querySelector(
-          `.objective-block[data-obj-index="${objIndex}"] tr[data-kr-index="${krIndex}"]`
-        );
-        if (!row) continue;
-
-        const labelInput = row.querySelector('.overview-kr-label');
-        const ownerSelect = row.querySelector(`select[data-path="${overviewPath(objIndex, null, krIndex, 'owner')}"]`);
-        const targetInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'target')}"]`);
-        const currentInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'current')}"]`);
-        const notesInput = row.querySelector(`input[data-path="${overviewPath(objIndex, null, krIndex, 'notes')}"]`);
-
-        if (labelInput) labelInput.value = krData.label || '';
-        if (ownerSelect) ownerSelect.value = krData.owner || '';
-        if (targetInput) targetInput.value = krData.target || '';
-        if (currentInput) currentInput.value = krData.current || '';
-        if (notesInput) notesInput.value = krData.notes || '';
-      }
-    }
-  }
-
-  function initOverview() {
-    if (overviewInitialized) return;
-    overviewInitialized = true;
-
-    renderOverview();
-
-    db.ref('overview').on('value', snapshot => {
-      const data = snapshot.val() || {};
-      applyOverviewData(data);
-    });
-
-    document.querySelectorAll('#overview-panel [data-path]').forEach(el => {
-      const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
-
-      el.addEventListener(eventType, () => {
-        clearTimeout(overviewDebounceTimers[el.dataset.path]);
-        overviewDebounceTimers[el.dataset.path] = setTimeout(() => {
-          db.ref(el.dataset.path).set(el.value);
-        }, el.tagName === 'SELECT' ? 0 : 800);
-      });
-    });
-  }
-
   function clearPersonPanel() {
     document.querySelectorAll('.person-objective-block').forEach(block => {
       block.querySelector('.person-objective-title').value = '';
-
       block.querySelectorAll('tbody tr').forEach(row => {
         const krText = row.querySelector('.kr-text');
         const targetSelect = row.querySelector('.kr-target');
@@ -661,7 +902,6 @@
   function bindPersonField(el, pathBuilder, eventType) {
     el.addEventListener(eventType, () => {
       if (!currentPerson) return;
-
       const path = pathBuilder();
       clearTimeout(personDebounceTimers[path]);
       personDebounceTimers[path] = setTimeout(() => {
@@ -696,7 +936,6 @@
 
         populatePercentSelect(targetSelect);
         populatePercentSelect(actualSelect);
-
         targetSelect.value = '0';
         actualSelect.value = '0';
         updateStatusBubble(targetSelect, actualSelect, bubble);
@@ -704,7 +943,6 @@
         targetSelect.addEventListener('change', () => {
           updateStatusBubble(targetSelect, actualSelect, bubble);
         });
-
         actualSelect.addEventListener('change', () => {
           updateStatusBubble(targetSelect, actualSelect, bubble);
         });
@@ -714,19 +952,16 @@
           () => personPath(currentPerson, objIndex, krIndex, 'text'),
           'input'
         );
-
         bindPersonField(
           targetSelect,
           () => personPath(currentPerson, objIndex, krIndex, 'target'),
           'change'
         );
-
         bindPersonField(
           actualSelect,
           () => personPath(currentPerson, objIndex, krIndex, 'actual'),
           'change'
         );
-
         bindPersonField(
           discussion,
           () => personPath(currentPerson, objIndex, krIndex, 'discussion'),
