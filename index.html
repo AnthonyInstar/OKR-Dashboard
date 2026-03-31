@@ -238,6 +238,31 @@
     @media (max-width: 1100px) {
       .quarterly-grid { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
     }
+
+    .exec-owners-cell { position: relative; min-width: 130px; }
+    .exec-owners-trigger {
+      width: 100%; text-align: left; font-size: 12px; padding: 4px 6px;
+      border: 1px solid #cbd5e1; border-radius: 4px; background: #fff;
+      cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 160px; display: block;
+    }
+    .exec-owners-trigger:hover { background: #f1f5f9; }
+    .exec-owners-menu {
+      position: absolute; z-index: 999; background: #fff;
+      border: 1px solid #cbd5e1; border-radius: 6px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      min-width: 160px; padding: 6px 0;
+      top: calc(100% + 2px); left: 0;
+    }
+    .exec-owner-option {
+      display: flex; align-items: center; gap: 7px;
+      padding: 5px 12px; font-size: 12px; cursor: pointer;
+      white-space: nowrap;
+    }
+    .exec-owner-option:hover { background: #f1f5f9; }
+    .exec-owner-option input { cursor: pointer; }
+    .quarter-card-title { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .quarter-status-pill { font-size: 10px; padding: 1px 7px; }
   </style>
 </head>
 <body>
@@ -443,10 +468,34 @@
     return allMembers.map(n => `<option value="${n}">${n}</option>`).join('');
   }
 
+  function createExecutionOwnerCheckboxes(objIndex, krIndex) {
+    const allMembers = ['All Leaders', ...TEAM_MEMBERS];
+    return allMembers.map(n => `
+      <label class="exec-owner-option">
+        <input type="checkbox" value="${n}" data-exec-check="${objIndex}-${krIndex}"> ${n}
+      </label>`).join('');
+  }
+
+  function updateExecOwnerTriggerLabel(objIndex, krIndex) {
+    const menu = document.getElementById(`exec-menu-${objIndex}-${krIndex}`);
+    const trigger = document.querySelector(`[data-exec-trigger="${objIndex}-${krIndex}"]`);
+    if (!menu || !trigger) return;
+    const checked = Array.from(menu.querySelectorAll('input[type=checkbox]:checked')).map(c => c.value);
+    trigger.textContent = checked.length === 0 ? 'Select owners ▾' : checked.join(', ') + ' ▾';
+    const path = overviewPath(objIndex, null, krIndex, 'executionOwners');
+    db.ref(path).set(checked.length ? checked : null);
+    if (overviewCache[`obj${objIndex}`] && overviewCache[`obj${objIndex}`][`kr${krIndex}`]) {
+      overviewCache[`obj${objIndex}`][`kr${krIndex}`].executionOwners = checked;
+    }
+  }
+
   function createQuarterCardHTML(objIndex, krIndex, quarterKey) {
     return `
       <div class="quarter-card" data-quarter-card="${objIndex}-${krIndex}-${quarterKey}">
-        <div class="quarter-card-title">${QUARTER_LABELS[quarterKey]}</div>
+        <div class="quarter-card-title">
+          ${QUARTER_LABELS[quarterKey]}
+          <span class="kr-status-pill pill-gray quarter-status-pill" data-quarter-status="${objIndex}-${krIndex}-${quarterKey}">No data</span>
+        </div>
         <div class="quarter-card-fields">
           <label>Target</label>
           <select data-path="${overviewPath(objIndex,null,krIndex,null,quarterKey,'target')}">${quarterPercentOptions()}</select>
@@ -468,20 +517,25 @@
           <td class="kr-text">
             <div class="kr-cell-top">
               <input type="text" class="overview-kr-label" data-path="${overviewPath(objIndex,null,krIndex,'label')}" placeholder="Key Result ${objIndex}.${krIndex}"/>
-              <span class="kr-status-pill pill-gray" data-kr-status="${rowKey}">No data</span>
             </div>
             <div class="kr-actions">
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
             </div>
           </td>
-          <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
-          <td><select multiple data-path="${overviewPath(objIndex,null,krIndex,'executionOwners')}" style="min-width:120px;height:60px;font-size:12px;">${createExecutionOwnerOptions()}</select></td>
           <td><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric…"/></td>
-          <td><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'current')}" placeholder="Current…"/></td>
+          <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
+          <td class="exec-owners-cell">
+            <div class="exec-owners-dropdown" data-exec-key="${objIndex}-${krIndex}">
+              <button type="button" class="exec-owners-trigger" data-exec-trigger="${objIndex}-${krIndex}">Select owners ▾</button>
+              <div class="exec-owners-menu" id="exec-menu-${objIndex}-${krIndex}" style="display:none;">
+                ${createExecutionOwnerCheckboxes(objIndex, krIndex)}
+              </div>
+            </div>
+          </td>
           <td class="notes-col"><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes…"/></td>
         </tr>
         <tr class="quarterly-editor-row" data-kr-quarters-row="${rowKey}">
-          <td colspan="7">
+          <td colspan="6">
             <div class="quarterly-grid">${quarterCards}</div>
             <div class="validation-note" data-validation-note="${rowKey}"></div>
           </td>
@@ -499,7 +553,7 @@
         <table class="okr-table">
           <thead>
             <tr>
-              <th>#</th><th>Key Results</th><th>Owner (accountable)</th><th>Execution Owners</th><th>Metric</th><th>Current</th><th class="notes-col">Notes</th>
+              <th>#</th><th>Key Results</th><th>Metric</th><th>Owner (accountable)</th><th>Execution Owners</th><th class="notes-col">Notes</th>
             </tr>
           </thead>
           <tbody>${rowsHTML}</tbody>
@@ -764,6 +818,28 @@
         applyQuarterVisibilityUI();
       });
     });
+
+    // Exec owner dropdown toggle
+    overviewPanel.querySelectorAll('[data-exec-trigger]').forEach(trigger => {
+      trigger.addEventListener('click', e => {
+        e.stopPropagation();
+        const key = trigger.dataset.execTrigger;
+        const menu = document.getElementById(`exec-menu-${key}`);
+        const isOpen = menu.style.display !== 'none';
+        document.querySelectorAll('.exec-owners-menu').forEach(m => m.style.display='none');
+        menu.style.display = isOpen ? 'none' : 'block';
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.exec-owners-menu').forEach(m => m.style.display='none');
+    });
+    overviewPanel.querySelectorAll('[data-exec-check]').forEach(cb => {
+      cb.addEventListener('change', e => {
+        e.stopPropagation();
+        const [oi, ki] = cb.dataset.execCheck.split('-').map(Number);
+        updateExecOwnerTriggerLabel(oi, ki);
+      });
+    });
   }
 
   function applyQuarterVisibilityUI() {
@@ -794,15 +870,21 @@
         const krSummary=computeKrSummary(objIndex, krIndex, overviewCache);
         const pill=overviewPanel.querySelector(`[data-kr-status="${key}"]`);
         const validation=overviewPanel.querySelector(`[data-validation-note="${key}"]`);
-        if (pill) { pill.className=`kr-status-pill ${krSummary.className}`; pill.textContent=krSummary.label; }
+        // kr-status pill moved to individual quarters
         if (validation) validation.textContent=getValidationMessage(objIndex, krIndex, overviewCache);
         QUARTERS.forEach(q => {
           const card=overviewPanel.querySelector(`[data-quarter-card="${objIndex}-${krIndex}-${q}"]`);
+          const qPill=overviewPanel.querySelector(`[data-quarter-status="${objIndex}-${krIndex}-${q}"]`);
           if (!card) return;
           const kr=((overviewCache[`obj${objIndex}`]||{})[`kr${krIndex}`]||{});
           const qData=(kr.quarters||{})[q]||{};
           const t=parseInt(safePercentValue(qData.target),10), a=parseInt(safePercentValue(qData.actual),10);
           card.classList.toggle('missing-data', t===0&&a===0);
+          if (qPill) {
+            const lbl=getStatusLabel(t,a);
+            qPill.className=`kr-status-pill ${getStatusClass(lbl)} quarter-status-pill`;
+            qPill.textContent=lbl;
+          }
         });
       }
     }
@@ -821,17 +903,16 @@
         const labelInput=row.querySelector('.overview-kr-label');
         const ownerSelect=row.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,'owner')}"]`);
         const targetInput=row.querySelector(`input[data-path="${overviewPath(objIndex,null,krIndex,'target')}"]`);
-        const currentInput=row.querySelector(`input[data-path="${overviewPath(objIndex,null,krIndex,'current')}"]`);
         const notesInput=row.querySelector(`input[data-path="${overviewPath(objIndex,null,krIndex,'notes')}"]`);
         if (labelInput) labelInput.value=krData.label||'';
         if (ownerSelect) ownerSelect.value=krData.owner||'';
-        const execSelect=row.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,'executionOwners')}"]`);
-        if (execSelect && krData.executionOwners) {
+        const execMenu=document.getElementById(`exec-menu-${objIndex}-${krIndex}`);
+        if (execMenu && krData.executionOwners) {
           const vals = Array.isArray(krData.executionOwners) ? krData.executionOwners : [krData.executionOwners];
-          Array.from(execSelect.options).forEach(o => { o.selected = vals.includes(o.value); });
+          execMenu.querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = vals.includes(cb.value); });
+          updateExecOwnerTriggerLabel(objIndex, krIndex);
         }
         if (targetInput) targetInput.value=krData.target||'';
-        if (currentInput) currentInput.value=krData.current||'';
         if (notesInput) notesInput.value=krData.notes||'';
         QUARTERS.forEach(q => {
           const qData=(krData.quarters||{})[q]||{};
