@@ -148,7 +148,7 @@
     .pill-green  { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
     .pill-orange { background: #fef3c7; color: #92400e; border-color: #fde68a; }
     .pill-red    { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
-    .pill-gray   { background: #e5e7eb; color: #4b5563; border-color: #d1d5db; }
+    .pill-gray   { background: #e5e7eb; color: #4b5563; border-color: #d1d5db; }
 
     .kr-actions { margin-top: 6px; display: flex; justify-content: flex-end; }
     .mini-link-btn {
@@ -506,9 +506,9 @@
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
             </div>
           </td>
-          <td><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Type your metric here"/></td>
+          <td><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric\'85"/></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
-          <td class="notes-col"><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Type your metric here"/></td>
+          <td class="notes-col"><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes\'85"/></td>
         </tr>
         <tr class="quarterly-editor-row" data-kr-quarters-row="${rowKey}">
           <td colspan="5">
