@@ -127,7 +127,7 @@
     .okr-table td.kr-num { font-weight: bold; color: #2563eb; width: 45px; text-align: center; white-space: nowrap; }
     .okr-table td.kr-text { width: 22%; color: #374151; }
     .okr-table tr:nth-child(even) td { background: #f8fafc; }
-    .okr-table input[type="text"], .okr-table select {
+    .okr-table textarea, .okr-table select {
       width: 100%; border: none; background: transparent;
       font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333;
     }
@@ -444,7 +444,7 @@
   }
 
   function createOwnerOptions() {
-    return `<option value=""></option>${TEAM_MEMBERS.map(n => `<option>${n}</option>`).join('')}`;
+    return `<option value="">\'97</option>${TEAM_MEMBERS.map(n => `<option>${n}</option>`).join('')}`;
   }
 
   function createExecutionOwnerOptions() {
