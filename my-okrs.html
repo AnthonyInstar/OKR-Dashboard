@@ -107,7 +107,7 @@
     .objective-text-input {
       width: 100%; border: none; background: rgba(255,255,255,0.12);
       color: #fff; border-radius: 4px; padding: 6px 8px;
-      font-size: 15px; font-weight: bold; outline: none;
+      font-size: 15px; font-weight: bold; outline: none; overflow: visible; white-space: nowrap; text-overflow: clip;
     }
     .objective-text-input::placeholder { color: rgba(255,255,255,0.7); }
     .objective-summary-badge {
@@ -128,14 +128,14 @@
     .okr-table td.kr-text { width: 22%; color: #374151; }
     .okr-table tr:nth-child(even) td { background: #f8fafc; }
     .okr-table input[type="text"], .okr-table select {
-      width: 100%; border: none; background: transparent;
-      font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333;
+      width: 100%; min-width: 0; border: none; background: transparent; overflow: visible; white-space: nowrap; text-overflow: clip;
+      font-size: 13px; font-family: Arial, sans-serif; overflow: visible; white-space: nowrap; text-overflow: clip; padding: 3px 4px; outline: none; overflow: visible; white-space: nowrap; text-overflow: clip; color: #333;
     }
     .okr-table input[type="text"]:focus, .okr-table select:focus { background: #eff6ff; border-radius: 3px; }
     .okr-table td.notes-col { min-width: 160px; }
     .overview-kr-label {
-      width: 100%; border: none; background: transparent;
-      color: #374151; font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none;
+      width: 100%; min-width: 0; border: none; background: transparent; overflow: visible; white-space: nowrap; text-overflow: clip;
+      color: #374151; font-size: 13px; font-family: Arial, sans-serif; overflow: visible; white-space: nowrap; text-overflow: clip; padding: 3px 4px; outline: none; overflow: visible; white-space: nowrap; text-overflow: clip;
     }
     .overview-kr-label:focus { background: #eff6ff; border-radius: 3px; }
 
@@ -213,11 +213,11 @@
     .person-okr-table td { padding: 6px 8px; border: 1px solid #e5e7eb; vertical-align: middle; }
     .person-okr-table input[type="text"] {
       width: 100%; border-radius: 3px; border: 1px solid #d1d5db;
-      padding: 3px 4px; font-size: 13px; font-family: Arial, sans-serif;
+      padding: 3px 4px; font-size: 13px; font-family: Arial, sans-serif; overflow: visible; white-space: nowrap; text-overflow: clip;
     }
     .person-okr-table select {
       width: 100%; border-radius: 3px; border: 1px solid #d1d5db;
-      padding: 3px 4px; font-size: 13px; font-family: Arial, sans-serif; background: #fff;
+      padding: 3px 4px; font-size: 13px; font-family: Arial, sans-serif; overflow: visible; white-space: nowrap; text-overflow: clip; background: #fff;
     }
     .status-bubble {
       display: inline-block; width: 14px; height: 14px; border-radius: 50%;
@@ -444,7 +444,7 @@
   }
 
   function createOwnerOptions() {
-    return `<option value="">\</option>${TEAM_MEMBERS.map(n => `<option>${n}</option>`).join('')}`;
+    return `<option value="">\'97</option>${TEAM_MEMBERS.map(n => `<option>${n}</option>`).join('')}`;
   }
 
   function createExecutionOwnerOptions() {
