@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>OKR Leadership Dashboard</title>
+  <title>My OKRs — Anthony</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body { display: flex; height: 100vh; background: #f4f5f7; color: #333; }
@@ -238,29 +238,6 @@
     @media (max-width: 1100px) {
       .quarterly-grid { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
     }
-
-    .exec-owners-cell { position: relative; min-width: 130px; }
-    .exec-owners-trigger {
-      width: 100%; text-align: left; font-size: 12px; padding: 4px 6px;
-      border: 1px solid #cbd5e1; border-radius: 4px; background: #fff;
-      cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      max-width: 160px; display: block;
-    }
-    .exec-owners-trigger:hover { background: #f1f5f9; }
-    .exec-owners-menu {
-      position: absolute; z-index: 999; background: #fff;
-      border: 1px solid #cbd5e1; border-radius: 6px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-      min-width: 160px; padding: 6px 0;
-      top: calc(100% + 2px); left: 0;
-    }
-    .exec-owner-option {
-      display: flex; align-items: center; gap: 7px;
-      padding: 5px 12px; font-size: 12px; cursor: pointer;
-      white-space: nowrap;
-    }
-    .exec-owner-option:hover { background: #f1f5f9; }
-    .exec-owner-option input { cursor: pointer; }
     .quarter-card-title { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .quarter-status-pill { font-size: 10px; padding: 1px 7px; }
   </style>
@@ -268,19 +245,19 @@
 <body>
 
 <div id="login-screen">
-  <h1>OKR Leadership Dashboard</h1>
+  <h1>My OKRs — Anthony</h1>
   <p>Sign in with your Google account to access</p>
   <button id="login-btn">
     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"/>
     Sign in with Google
   </button>
-  <div id="access-denied">⛔ Access denied. Your email is not authorized.</div>
+  <div id="access-denied">⛔  Access denied. Your email is not authorized.</div>
 </div>
 
 <div id="dashboard">
   <div class="sidebar">
-    <h1>OKR Leadership Dashboard</h1>
-    <div class="nav-overview active" id="nav-overview">📊 OKR Overview</div>
+    <h1>My OKRs — Anthony</h1>
+    <div class="nav-overview active" id="nav-overview">? ?  OKR Overview</div>
     <hr class="nav-divider" style="display:none">
     <div class="nav-label" style="display:none">Individual OKRs</div>
     <ul class="person-list" style="display:none">
@@ -357,8 +334,11 @@
   const overviewDebounceTimers = {};
   const personDebounceTimers = {};
 
+  // ⚠️ REPLACE THIS WITH YOUR UID FROM FIREBASE → Authentication → Users
+  const MY_UID = 'oOLpXM7GCXVzwDPSQcVOMK5Es0s1';
+
   auth.onAuthStateChanged(user => {
-    if (user && ALLOWED_EMAILS.includes(user.email)) {
+    if (user && user.uid === MY_UID) {
       loginScreen.style.display = 'none';
       dashboard.style.display = 'flex';
       initOverview();
@@ -367,7 +347,11 @@
     } else {
       loginScreen.style.display = 'flex';
       dashboard.style.display = 'none';
-      if (user) { auth.signOut(); accessDenied.style.display = 'block'; }
+      if (user) {
+        auth.signOut();
+        accessDenied.style.display = 'block';
+        accessDenied.textContent = '⛔ Access restricted. This dashboard is private.';
+      }
     }
   });
 
@@ -397,14 +381,14 @@
   });
 
   function overviewPath(objIndex, field, krIndex=null, krField=null, quarter=null, quarterField=null) {
-    if (krIndex === null) return `overview/obj${objIndex}/${field}`;
-    if (quarter === null) return `overview/obj${objIndex}/kr${krIndex}/${krField}`;
-    return `overview/obj${objIndex}/kr${krIndex}/quarters/${quarter}/${quarterField}`;
+    if (krIndex === null) return `my_okrs/overview/obj${objIndex}/${field}`;
+    if (quarter === null) return `my_okrs/overview/obj${objIndex}/kr${krIndex}/${krField}`;
+    return `my_okrs/overview/obj${objIndex}/kr${krIndex}/quarters/${quarter}/${quarterField}`;
   }
 
   function personPath(personKey, objIndex, krIndex, field) {
-    if (krIndex == null) return `people/${personKey}/obj${objIndex}/${field}`;
-    return `people/${personKey}/obj${objIndex}/kr${krIndex}/${field}`;
+    if (krIndex == null) return `my_okrs/people/${personKey}/obj${objIndex}/${field}`;
+    return `my_okrs/people/${personKey}/obj${objIndex}/kr${krIndex}/${field}`;
   }
 
   function quarterPercentOptions() {
@@ -460,7 +444,7 @@
   }
 
   function createOwnerOptions() {
-    return `<option value="">—</option>${TEAM_MEMBERS.map(n => `<option>${n}</option>`).join('')}`;
+    return `<option value="">\'97</option>${TEAM_MEMBERS.map(n => `<option>${n}</option>`).join('')}`;
   }
 
   function createExecutionOwnerOptions() {
@@ -481,7 +465,7 @@
     const trigger = document.querySelector(`[data-exec-trigger="${objIndex}-${krIndex}"]`);
     if (!menu || !trigger) return;
     const checked = Array.from(menu.querySelectorAll('input[type=checkbox]:checked')).map(c => c.value);
-    trigger.textContent = checked.length === 0 ? 'Select owners ▾' : checked.join(', ') + ' ▾';
+    trigger.textContent = checked.length === 0 ? 'Select owners ▾ ' : checked.join(', ') + ' ▾ ';
     const path = overviewPath(objIndex, null, krIndex, 'executionOwners');
     db.ref(path).set(checked.length ? checked : null);
     if (overviewCache[`obj${objIndex}`] && overviewCache[`obj${objIndex}`][`kr${krIndex}`]) {
@@ -522,20 +506,12 @@
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
             </div>
           </td>
-          <td><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric…"/></td>
+          <td><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric\'85"/></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
-          <td class="exec-owners-cell">
-            <div class="exec-owners-dropdown" data-exec-key="${objIndex}-${krIndex}">
-              <button type="button" class="exec-owners-trigger" data-exec-trigger="${objIndex}-${krIndex}">Select owners ▾</button>
-              <div class="exec-owners-menu" id="exec-menu-${objIndex}-${krIndex}" style="display:none;">
-                ${createExecutionOwnerCheckboxes(objIndex, krIndex)}
-              </div>
-            </div>
-          </td>
-          <td class="notes-col"><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes…"/></td>
+          <td class="notes-col"><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes\'85"/></td>
         </tr>
         <tr class="quarterly-editor-row" data-kr-quarters-row="${rowKey}">
-          <td colspan="6">
+          <td colspan="5">
             <div class="quarterly-grid">${quarterCards}</div>
             <div class="validation-note" data-validation-note="${rowKey}"></div>
           </td>
@@ -553,7 +529,7 @@
         <table class="okr-table">
           <thead>
             <tr>
-              <th>#</th><th>Key Results</th><th>Metric</th><th>Owner (accountable)</th><th>Execution Owners</th><th class="notes-col">Notes</th>
+              <th>#</th><th>Key Results</th><th>Metric</th><th>Owner (accountable)</th><th class="notes-col">Notes</th>
             </tr>
           </thead>
           <tbody>${rowsHTML}</tbody>
@@ -631,9 +607,9 @@
     }
     if (active === 0) return { label: 'No data', color: 'rgba(255,255,255,0.18)' };
     const avg = score / active;
-    if (avg > 10) return { label: hasMissing ? 'Ahead · partial' : 'Ahead', color: '#166534' };
-    if (avg < -10) return { label: hasMissing ? 'Behind · partial' : 'Behind', color: '#991b1b' };
-    return { label: hasMissing ? 'Mixed · partial' : 'Mixed', color: '#92400e' };
+    if (avg > 10) return { label: hasMissing ? 'Ahead \'b7 partial' : 'Ahead', color: '#166534' };
+    if (avg < -10) return { label: hasMissing ? 'Behind \'b7 partial' : 'Behind', color: '#991b1b' };
+    return { label: hasMissing ? 'Mixed \'b7 partial' : 'Mixed', color: '#92400e' };
   }
 
   function getValidationMessage(objIndex, krIndex, data) {
@@ -649,7 +625,7 @@
     });
     if (!hasQuarterData) issues.push('No quarterly progress entered');
     else if (missingQuarter) issues.push('Some quarters still blank');
-    return issues.join(' · ');
+    return issues.join(' \'b7 ');
   }
 
   function renderRoadmap(container, data) {
@@ -678,7 +654,7 @@
       <svg class="roadmap-svg" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="${width}" height="${height}" fill="#f6f6f6"/>
         <text x="24" y="30" font-size="16" font-weight="700" fill="#111827">Quarterly KR Progress</text>
-        <text x="24" y="48" font-size="11" fill="#6b7280">Triangle = target · Circle = actual · Pentagon = KR endpoint · Dashed circle = missing quarter data</text>
+        <text x="24" y="48" font-size="11" fill="#6b7280">Triangle = target \'b7 Circle = actual \'b7 Pentagon = KR endpoint \'b7 Dashed circle = missing quarter data</text>
         <line x1="${leftLabelW}" y1="${titleH+topPad}" x2="${leftLabelW}" y2="${height-bottomPad}" stroke="#7a7070" stroke-width="1.6"/>`;
 
     for (let objIndex = 1; objIndex <= OVERVIEW_OBJECTIVE_COUNT; objIndex++) {
@@ -761,7 +737,7 @@
         try {
           const meta = JSON.parse(decodeURIComponent(node.dataset.meta||'{}'));
           tooltip.innerHTML = `
-            <div class="roadmap-tooltip-title">${escapeHtml(meta.type||'')} · ${escapeHtml(meta.quarter||'')}</div>
+            <div class="roadmap-tooltip-title">${escapeHtml(meta.type||'')} \'b7 ${escapeHtml(meta.quarter||'')}</div>
             <div>${escapeHtml(meta.objective||'')}</div>
             <div>${escapeHtml(meta.kr||'')}</div>
             <div>Value: ${escapeHtml(meta.value||'')}</div>
@@ -932,7 +908,7 @@
     if (overviewInitialized) return;
     overviewInitialized=true;
     renderOverview();
-    db.ref('overview').on('value', snapshot => { applyOverviewData(snapshot.val()||{}); });
+    db.ref('my_okrs/overview').on('value', snapshot => { applyOverviewData(snapshot.val()||{}); });
     document.querySelectorAll('#overview-panel [data-path]').forEach(el => {
       if (el.multiple) {
         el.addEventListener('change', () => {
@@ -964,7 +940,7 @@
       <div class="person-objective-block" data-obj-index="${objIndex}">
         <div class="person-objective-header">
           <label>Objective ${objIndex}:</label>
-          <input type="text" class="person-objective-title" placeholder="Describe the objective…">
+          <input type="text" class="person-objective-title" placeholder="Describe the objective\'85">
         </div>
         <table class="person-okr-table">
           <thead>
@@ -1043,7 +1019,7 @@
     currentPerson=personKey;
     if (currentPersonListenerRef) currentPersonListenerRef.off();
     clearPersonPanel();
-    currentPersonListenerRef=db.ref(`people/${personKey}`);
+    currentPersonListenerRef=db.ref(`my_okrs/people/${personKey}`);
     currentPersonListenerRef.on('value', snapshot => { applyPersonData(snapshot.val()||{}); });
   }
 </script>
