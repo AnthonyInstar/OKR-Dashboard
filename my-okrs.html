@@ -107,7 +107,7 @@
     .objective-text-input {
       width: 100%; border: none; background: rgba(255,255,255,0.12);
       color: #fff; border-radius: 4px; padding: 6px 8px;
-      font-size: 15px; font-weight: bold; outline: none; overflow: visible; white-space: nowrap; text-overflow: clip;
+      font-size: 15px; font-weight: bold; outline: none;
     }
     .objective-text-input::placeholder { color: rgba(255,255,255,0.7); }
     .objective-summary-badge {
@@ -128,14 +128,14 @@
     .okr-table td.kr-text { width: 22%; color: #374151; }
     .okr-table tr:nth-child(even) td { background: #f8fafc; }
     .okr-table input[type="text"], .okr-table select {
-      width: 100%; min-width: 0; border: none; background: transparent; overflow: visible; white-space: nowrap; text-overflow: clip;
-      font-size: 13px; font-family: Arial, sans-serif; overflow: visible; white-space: nowrap; text-overflow: clip; padding: 3px 4px; outline: none; overflow: visible; white-space: nowrap; text-overflow: clip; color: #333;
+      width: 100%; border: none; background: transparent;
+      font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333;
     }
     .okr-table input[type="text"]:focus, .okr-table select:focus { background: #eff6ff; border-radius: 3px; }
     .okr-table td.notes-col { min-width: 160px; }
     .overview-kr-label {
-      width: 100%; min-width: 0; border: none; background: transparent; overflow: visible; white-space: nowrap; text-overflow: clip;
-      color: #374151; font-size: 13px; font-family: Arial, sans-serif; overflow: visible; white-space: nowrap; text-overflow: clip; padding: 3px 4px; outline: none; overflow: visible; white-space: nowrap; text-overflow: clip;
+      width: 100%; border: none; background: transparent;
+      color: #374151; font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none;
     }
     .overview-kr-label:focus { background: #eff6ff; border-radius: 3px; }
 
@@ -213,11 +213,11 @@
     .person-okr-table td { padding: 6px 8px; border: 1px solid #e5e7eb; vertical-align: middle; }
     .person-okr-table input[type="text"] {
       width: 100%; border-radius: 3px; border: 1px solid #d1d5db;
-      padding: 3px 4px; font-size: 13px; font-family: Arial, sans-serif; overflow: visible; white-space: nowrap; text-overflow: clip;
+      padding: 3px 4px; font-size: 13px; font-family: Arial, sans-serif;
     }
     .person-okr-table select {
       width: 100%; border-radius: 3px; border: 1px solid #d1d5db;
-      padding: 3px 4px; font-size: 13px; font-family: Arial, sans-serif; overflow: visible; white-space: nowrap; text-overflow: clip; background: #fff;
+      padding: 3px 4px; font-size: 13px; font-family: Arial, sans-serif; background: #fff;
     }
     .status-bubble {
       display: inline-block; width: 14px; height: 14px; border-radius: 50%;
@@ -444,7 +444,7 @@
   }
 
   function createOwnerOptions() {
-    return `<option value="">\'97</option>${TEAM_MEMBERS.map(n => `<option>${n}</option>`).join('')}`;
+    return `<option value=""></option>${TEAM_MEMBERS.map(n => `<option>${n}</option>`).join('')}`;
   }
 
   function createExecutionOwnerOptions() {
@@ -500,15 +500,15 @@
           <td class="kr-num">${objIndex}.${krIndex}</td>
           <td class="kr-text">
             <div class="kr-cell-top">
-              <input type="text" class="overview-kr-label" data-path="${overviewPath(objIndex,null,krIndex,'label')}" placeholder="Key Result ${objIndex}.${krIndex}"/>
+              <textarea class="overview-kr-label" data-path="${overviewPath(objIndex,null,krIndex,'label')}" placeholder="Key Result ${objIndex}.${krIndex}"/>
             </div>
             <div class="kr-actions">
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
             </div>
           </td>
-          <td><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric\'85"/></td>
+          <td><textarea data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric\'85"/></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
-          <td class="notes-col"><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes\'85"/></td>
+          <td class="notes-col"><textarea data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes\'85"/></td>
         </tr>
         <tr class="quarterly-editor-row" data-kr-quarters-row="${rowKey}">
           <td colspan="5">
@@ -522,7 +522,7 @@
         <div class="objective-header">
           <div class="objective-badge">O${objIndex}</div>
           <div class="objective-header-main">
-            <input type="text" class="objective-text-input" data-path="${overviewPath(objIndex,'title')}" placeholder="Objective ${objIndex}"/>
+            <textarea class="objective-text-input" data-path="${overviewPath(objIndex,'title')}" placeholder="Objective ${objIndex}"/>
           </div>
           <div class="objective-summary-badge" data-objective-summary="${objIndex}">No data</div>
         </div>
@@ -930,17 +930,17 @@
     for (let krIndex=1; krIndex<=PERSON_KR_COUNT; krIndex++) {
       rowsHTML+=`
         <tr data-kr-index="${krIndex}">
-          <td><input type="text" class="kr-text"></td>
+          <td><textarea class="kr-text"></td>
           <td><select class="kr-target"></select></td>
           <td><select class="kr-actual"></select><span class="status-bubble"></span></td>
-          <td><input type="text" class="kr-discussion"></td>
+          <td><textarea class="kr-discussion"></td>
         </tr>`;
     }
     return `
       <div class="person-objective-block" data-obj-index="${objIndex}">
         <div class="person-objective-header">
           <label>Objective ${objIndex}:</label>
-          <input type="text" class="person-objective-title" placeholder="Describe the objective\'85">
+          <textarea class="person-objective-title" placeholder="Describe the objective\'85">
         </div>
         <table class="person-okr-table">
           <thead>
