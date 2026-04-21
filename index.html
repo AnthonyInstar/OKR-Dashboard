@@ -396,7 +396,7 @@
     });
   });
 
-  function overviewPath(objIndex, field, krIndex=null, krField=null, quarter=null, quarterField=null) {
+  function autoResizeTextarea(el) { el.style.height = '24px'; if (el.scrollHeight > 24) el.style.height = el.scrollHeight + 'px'; } function overviewPath(objIndex, field, krIndex=null, krField=null, quarter=null, quarterField=null) {
     if (krIndex === null) return `overview/obj${objIndex}/${field}`;
     if (quarter === null) return `overview/obj${objIndex}/kr${krIndex}/${krField}`;
     return `overview/obj${objIndex}/kr${krIndex}/quarters/${quarter}/${quarterField}`;
@@ -516,13 +516,13 @@
           <td class="kr-num">${objIndex}.${krIndex}</td>
           <td class="kr-text">
             <div class="kr-cell-top">
-              <input type="text" class="overview-kr-label" data-path="${overviewPath(objIndex,null,krIndex,'label')}" placeholder="Key Result ${objIndex}.${krIndex}"/>
+              <textarea class="overview-kr-label okr-auto-textarea" data-path="${overviewPath(objIndex,null,krIndex,'label')}" placeholder="Key Result ${objIndex}.${krIndex}" rows="1" oninput="autoResizeTextarea(this)"></textarea>
             </div>
             <div class="kr-actions">
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
             </div>
           </td>
-          <td><textarea data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric…" rows="1"></textarea></td>
+          <td><textarea class="okr-auto-textarea" data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric…" rows="1" oninput="autoResizeTextarea(this)"></textarea></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
           <td class="exec-owners-cell">
             <div class="exec-owners-dropdown" data-exec-key="${objIndex}-${krIndex}">
@@ -532,7 +532,7 @@
               </div>
             </div>
           </td>
-          <td class="notes-col"><textarea data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes…" rows="1"></textarea></td>
+          <td class="notes-col"><textarea class="okr-auto-textarea" data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes…" rows="1" oninput="autoResizeTextarea(this)"></textarea></td>
         </tr>
         <tr class="quarterly-editor-row" data-kr-quarters-row="${rowKey}">
           <td colspan="6">
@@ -904,7 +904,7 @@
         const ownerSelect=row.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,'owner')}"]`);
         const targetInput=row.querySelector(`[data-path="${overviewPath(objIndex,null,krIndex,'target')}"]`);
         const notesInput=row.querySelector(`[data-path="${overviewPath(objIndex,null,krIndex,'notes')}"]`);
-        if (labelInput) labelInput.value=krData.label||'';
+        if (labelInput) { labelInput.value=krData.label||''; autoResizeTextarea(labelInput); }
         if (ownerSelect) ownerSelect.value=krData.owner||'';
         const execMenu=document.getElementById(`exec-menu-${objIndex}-${krIndex}`);
         if (execMenu && krData.executionOwners) {
@@ -912,8 +912,8 @@
           execMenu.querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = vals.includes(cb.value); });
           updateExecOwnerTriggerLabel(objIndex, krIndex);
         }
-        if (targetInput) { targetInput.value=krData.target||''; autoResize(targetInput); }
-        if (notesInput) { notesInput.value=krData.notes||''; autoResize(notesInput); }
+        if (targetInput) { targetInput.value=krData.target||''; autoResizeTextarea(targetInput); }
+        if (notesInput) { notesInput.value=krData.notes||''; autoResizeTextarea(notesInput); }
         QUARTERS.forEach(q => {
           const qData=(krData.quarters||{})[q]||{};
           const targetSel=overviewPanel.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,null,q,'target')}"]`);
@@ -928,7 +928,7 @@
     if (roadmapEl) renderRoadmap(roadmapEl, overviewCache);
   }
 
-  function autoResize(el) { el.style.height = '24px'; if (el.scrollHeight > 24) el.style.height = el.scrollHeight + 'px'; } function initOverview() {
+  function initOverview() {
     if (overviewInitialized) return;
     overviewInitialized=true;
     renderOverview();
