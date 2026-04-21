@@ -143,10 +143,8 @@
     .scrollable-cell { vertical-align: top; padding-top: 7px !important; }
     .okr-table td.notes-col { min-width: 160px; }
     .overview-kr-label {
-      width: 100%; border: none; background: transparent;
-      color: #374151; font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none;
+      color: #374151;
     }
-    .overview-kr-label:focus { background: #eff6ff; border-radius: 3px; }
 
     .kr-cell-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .kr-status-pill {
@@ -509,7 +507,7 @@
           <td class="kr-num">${objIndex}.${krIndex}</td>
           <td class="kr-text">
             <div class="kr-cell-top">
-              <input type="text" class="overview-kr-label" data-path="${overviewPath(objIndex,null,krIndex,'label')}" placeholder="Key Result ${objIndex}.${krIndex}"/>
+              <textarea class="overview-kr-label scroll-input" data-path="${overviewPath(objIndex,null,krIndex,'label')}" placeholder="Key Result ${objIndex}.${krIndex}" oninput="autoResizeTextarea(this)"></textarea>
             </div>
             <div class="kr-actions">
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
