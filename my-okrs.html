@@ -886,9 +886,9 @@
         if (!row) continue;
         const labelInput=row.querySelector('.overview-kr-label');
         const ownerSelect=row.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,'owner')}"]`);
-        const targetInput=row.querySelector(`input[data-path="${overviewPath(objIndex,null,krIndex,'target')}"]`);
-        const notesInput=row.querySelector(`input[data-path="${overviewPath(objIndex,null,krIndex,'notes')}"]`);
-        if (labelInput) labelInput.value=krData.label||'';
+        const targetInput=row.querySelector(`[data-path="${overviewPath(objIndex,null,krIndex,'target')}"]`);
+        const notesInput=row.querySelector(`[data-path="${overviewPath(objIndex,null,krIndex,'notes')}"]`);
+        if (labelInput) { labelInput.value=krData.label||''; autoResizeTextarea(labelInput); }
         if (ownerSelect) ownerSelect.value=krData.owner||'';
         const execMenu=document.getElementById(`exec-menu-${objIndex}-${krIndex}`);
         if (execMenu && krData.executionOwners) {
@@ -898,8 +898,8 @@
         }
         const responsibleSelect=row.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,'responsible')}"]`);
         if (responsibleSelect) responsibleSelect.value=krData.responsible||'';
-        if (targetInput) targetInput.value=krData.target||'';
-        if (notesInput) notesInput.value=krData.notes||'';
+        if (targetInput) { targetInput.value=krData.target||''; autoResizeTextarea(targetInput); }
+        if (notesInput) { notesInput.value=krData.notes||''; autoResizeTextarea(notesInput); }
         QUARTERS.forEach(q => {
           const qData=(krData.quarters||{})[q]||{};
           const targetSel=overviewPanel.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,null,q,'target')}"]`);
