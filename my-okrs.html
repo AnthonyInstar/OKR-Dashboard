@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>My OKRs - Anthony</title>
+  <title>My OKRs — Anthony</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body { display: flex; height: 100vh; background: #f4f5f7; color: #333; }
@@ -135,12 +135,12 @@
     .scroll-input {
       width: 100%; border: none; background: transparent;
       font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333;
-      resize: none; overflow: hidden; white-space: pre-wrap; word-wrap: break-word;
-      line-height: 1.4; min-height: 24px; height: auto;
+      resize: none; overflow: hidden; word-wrap: break-word; white-space: pre-wrap;
+      line-height: 1.5; min-height: 26px; height: 26px;
       display: block; box-sizing: border-box;
     }
     .scroll-input:focus { background: #eff6ff; border-radius: 3px; }
-    .scrollable-cell { vertical-align: top; }
+    .scrollable-cell { vertical-align: top; padding-top: 7px !important; }
     .okr-table td.notes-col { min-width: 160px; }
     .overview-kr-label {
       width: 100%; border: none; background: transparent;
@@ -265,7 +265,7 @@
 
 <div id="dashboard">
   <div class="sidebar">
-    <h1>My OKRs</h1>
+    <h1>My OKRs — Anthony</h1>
     <div class="nav-overview active" id="nav-overview">OKR Overview</div>
     <hr class="nav-divider" style="display:none">
     <div class="nav-label" style="display:none">Individual OKRs</div>
@@ -515,10 +515,10 @@
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
             </div>
           </td>
-          <td class="scrollable-cell"><textarea data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Type your text here" class="scroll-input"></textarea></td>
+          <td class="scrollable-cell"><textarea data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Type your text here" class="scroll-input" oninput="autoResizeTextarea(this)"></textarea></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'responsible')}">${createOwnerOptions()}</select></td>
-          <td class="notes-col scrollable-cell"><textarea data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Type your text here" class="scroll-input"></textarea></td>
+          <td class="notes-col scrollable-cell"><textarea data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Type your text here" class="scroll-input" oninput="autoResizeTextarea(this)"></textarea></td>
         </tr>
         <tr class="quarterly-editor-row" data-kr-quarters-row="${rowKey}">
           <td colspan="6">
@@ -917,8 +917,8 @@
   }
 
   function autoResizeTextarea(el) {
-  el.style.height = 'auto';
-  el.style.height = el.scrollHeight + 'px';
+  el.style.height = '26px';
+  el.style.height = (el.scrollHeight) + 'px';
 }
 
 function initOverview() {
