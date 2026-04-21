@@ -522,7 +522,7 @@
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
             </div>
           </td>
-          <td><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric…"/></td>
+          <td><textarea data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Metric…" rows="1"></textarea></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
           <td class="exec-owners-cell">
             <div class="exec-owners-dropdown" data-exec-key="${objIndex}-${krIndex}">
@@ -532,7 +532,7 @@
               </div>
             </div>
           </td>
-          <td class="notes-col"><input type="text" data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes…"/></td>
+          <td class="notes-col"><textarea data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Notes…" rows="1"></textarea></td>
         </tr>
         <tr class="quarterly-editor-row" data-kr-quarters-row="${rowKey}">
           <td colspan="6">
@@ -912,8 +912,8 @@
           execMenu.querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = vals.includes(cb.value); });
           updateExecOwnerTriggerLabel(objIndex, krIndex);
         }
-        if (targetInput) targetInput.value=krData.target||'';
-        if (notesInput) notesInput.value=krData.notes||'';
+        if (targetInput) { targetInput.value=krData.target||''; autoResize(targetInput); }
+        if (notesInput) { notesInput.value=krData.notes||''; autoResize(notesInput); }
         QUARTERS.forEach(q => {
           const qData=(krData.quarters||{})[q]||{};
           const targetSel=overviewPanel.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,null,q,'target')}"]`);
