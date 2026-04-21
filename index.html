@@ -148,7 +148,7 @@
     .pill-green  { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
     .pill-orange { background: #fef3c7; color: #92400e; border-color: #fde68a; }
     .pill-red    { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
-    .pill-gray   { background: #e5e7eb; color: #4b5563; border-color: #d1d5db; }
+    .pill-gray   { background: #e5e7eb; color: #4b5563; border-color: #d1d5db; }
 
     .kr-actions { margin-top: 6px; display: flex; justify-content: flex-end; }
     .mini-link-btn {
@@ -902,8 +902,8 @@
         if (!row) continue;
         const labelInput=row.querySelector('.overview-kr-label');
         const ownerSelect=row.querySelector(`select[data-path="${overviewPath(objIndex,null,krIndex,'owner')}"]`);
-        const targetInput=row.querySelector(`input[data-path="${overviewPath(objIndex,null,krIndex,'target')}"]`);
-        const notesInput=row.querySelector(`input[data-path="${overviewPath(objIndex,null,krIndex,'notes')}"]`);
+        const targetInput=row.querySelector(`[data-path="${overviewPath(objIndex,null,krIndex,'target')}"]`);
+        const notesInput=row.querySelector(`[data-path="${overviewPath(objIndex,null,krIndex,'notes')}"]`);
         if (labelInput) labelInput.value=krData.label||'';
         if (ownerSelect) ownerSelect.value=krData.owner||'';
         const execMenu=document.getElementById(`exec-menu-${objIndex}-${krIndex}`);
@@ -928,7 +928,7 @@
     if (roadmapEl) renderRoadmap(roadmapEl, overviewCache);
   }
 
-  function initOverview() {
+  function autoResize(el) { el.style.height = '24px'; if (el.scrollHeight > 24) el.style.height = el.scrollHeight + 'px'; } function initOverview() {
     if (overviewInitialized) return;
     overviewInitialized=true;
     renderOverview();
