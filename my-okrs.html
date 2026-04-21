@@ -135,12 +135,12 @@
     .scroll-input {
       width: 100%; border: none; background: transparent;
       font-size: 13px; font-family: Arial, sans-serif; padding: 3px 4px; outline: none; color: #333;
-      resize: none; overflow-x: auto; overflow-y: hidden;
-      white-space: nowrap; line-height: 1.4; height: 24px;
+      resize: none; overflow: hidden; white-space: pre-wrap; word-wrap: break-word;
+      line-height: 1.4; min-height: 24px; height: auto;
       display: block; box-sizing: border-box;
     }
     .scroll-input:focus { background: #eff6ff; border-radius: 3px; }
-    .scrollable-cell { overflow: hidden; }
+    .scrollable-cell { vertical-align: top; }
     .okr-table td.notes-col { min-width: 160px; }
     .overview-kr-label {
       width: 100%; border: none; background: transparent;
@@ -515,10 +515,10 @@
               <button class="mini-link-btn" type="button" data-toggle-quarters="${rowKey}">Hide quarters</button>
             </div>
           </td>
-          <td class="scrollable-cell"><textarea data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Type your text here" rows="1" class="scroll-input"></textarea></td>
+          <td class="scrollable-cell"><textarea data-path="${overviewPath(objIndex,null,krIndex,'target')}" placeholder="Type your text here" class="scroll-input"></textarea></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'owner')}">${createOwnerOptions()}</select></td>
           <td><select data-path="${overviewPath(objIndex,null,krIndex,'responsible')}">${createOwnerOptions()}</select></td>
-          <td class="notes-col scrollable-cell"><textarea data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Type your text here" rows="1" class="scroll-input"></textarea></td>
+          <td class="notes-col scrollable-cell"><textarea data-path="${overviewPath(objIndex,null,krIndex,'notes')}" placeholder="Type your text here" class="scroll-input"></textarea></td>
         </tr>
         <tr class="quarterly-editor-row" data-kr-quarters-row="${rowKey}">
           <td colspan="6">
@@ -916,7 +916,12 @@
     if (roadmapEl) renderRoadmap(roadmapEl, overviewCache);
   }
 
-  function initOverview() {
+  function autoResizeTextarea(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+function initOverview() {
     if (overviewInitialized) return;
     overviewInitialized=true;
     renderOverview();
